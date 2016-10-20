@@ -42,6 +42,22 @@
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".HighPriority"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".LowPriority"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".NoPriority"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

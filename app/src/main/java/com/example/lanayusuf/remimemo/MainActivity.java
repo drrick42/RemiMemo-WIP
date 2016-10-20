@@ -60,11 +60,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.btnHighPriority:
-                System.out.println("pressed high priority button");
+                startActivity(new Intent(this, HighPriority.class));
                 break;
             case R.id.btnLowPriority:
+                startActivity(new Intent(this, LowPriority.class));
                 break;
             case R.id.btnNoPriority:
+                startActivity(new Intent(this, NoPriority.class));
                 break;
             case R.id.btnEventMap:
                 startActivity(new Intent(this, EventMap.class));
