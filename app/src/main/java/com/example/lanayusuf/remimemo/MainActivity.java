@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    //Main Options page
+
     private final String TAG = getClass().getSimpleName();
 
     @Override
@@ -26,33 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View btnSettings = findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(this);
 
-    }
-
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "++ onStart() ++");
-    }
-
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "+ onResume() +");
-    }
-
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "- onPause() -");
-    }
-
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "-- onStop() --");
-    }
-
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "--- onDestroy() ---");
-
-        android.os.Debug.stopMethodTracing();
     }
 
     @Override

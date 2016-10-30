@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,7 +16,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class EventMap extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemClickListener {
+public class EventMap extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemClickListener, View.OnClickListener {
+
+    //Map and list of events
+    //TODO: implement GPS for internal service
+    //Have a button that says "locate me" and move map to current location
 
     private GoogleMap mMap;
     String[] continents = {"North America", "South America", "Europe", "Asia", "Africa", "Antarctica", "Australia"};
@@ -29,10 +34,11 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-
+        Button btnBack = (Button)findViewById(R.id.btnBackPriority);
+        btnBack.setOnClickListener(this);
 
         //ListView
+        //TODO: populate array with events from database (those that have location tags)
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.map_list_view, continents);
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
@@ -41,7 +47,20 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
     }
 
     @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.btnBackPriority:
+                //bring to Main Options screen
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+        }
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+
+        //user clicks on event which moves the map to the location marker for that event
         switch (position)
         {
             case 0:

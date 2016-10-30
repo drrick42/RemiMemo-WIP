@@ -58,6 +58,11 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".EditEvent"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

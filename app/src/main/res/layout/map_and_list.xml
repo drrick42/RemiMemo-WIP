@@ -3,6 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#3F51B5">
+
+        <Button
+            android:id="@+id/btnBackPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textSize="26sp"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:id="@+id/txtViewPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Event Map"
+            android:textSize="26sp"
+            android:textColor="#031312"/>
+
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
