@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.support.v4.app.DialogFragment;
+
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -110,30 +112,32 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                 //Sensor Requirement
                 //On map, zoom in to user's current location, and add marker
 
+
+                //check phone's permission for location services
                 if ( Build.VERSION.SDK_INT >= 23 &&
                         ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                    //dialog to tell user to enable location services or enable them through code
+                    //dialog to tell user to enable location services
+                    DialogFragment permission = new PermissionDialog();
+                    permission.show(getSupportFragmentManager(), "Location Permission");
 
-                    return  ;
+                }else{
+                    if(markerLocation != null){
+                        markerLocation.remove();
+                    }
+
+                    //get current location
+                    Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                    LatLng latLong = new LatLng(location.getLatitude(),location.getLongitude());
+
+                    //add marker on current location
+                    markerLocation = mMap.addMarker(new MarkerOptions().position(latLong).title("ME!"));
+
+                    //move map/camera to current location
+                    CameraPosition myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }
-
-                if(markerLocation != null){
-                    markerLocation.remove();
-                }
-
-                Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-                LatLng latLong = new LatLng(location.getLatitude(),
-                        location.getLongitude());
-
-                markerLocation = mMap.addMarker(new MarkerOptions().position(latLong).title("ME!"));
-
-                CameraPosition myPosition = new CameraPosition.Builder()
-                        .target(latLong).zoom(17).build();
-                mMap.animateCamera(
-                        CameraUpdateFactory.newCameraPosition(myPosition));
                 break;
         }
     }
