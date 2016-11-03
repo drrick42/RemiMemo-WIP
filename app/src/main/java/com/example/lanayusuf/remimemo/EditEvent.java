@@ -64,6 +64,11 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         //listener to get event description
         Editable eventDescription = editTxtEventDescription.getText();
 
+        //User is able to add address location of event
+        EditText editTxtEventLocation = (EditText) findViewById(R.id.editTxt_location);
+        //listener to get event location
+        Editable eventLocation = editTxtEventLocation.getText();
+
         //User selects priority of event
         Spinner spinner = (Spinner)findViewById(R.id.spinner_priority);
         String[] priority = {"Select", "High", "Low", "None"};
