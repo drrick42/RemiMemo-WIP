@@ -1,29 +1,41 @@
 package com.example.lanayusuf.remimemo;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class EventMap extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemClickListener, View.OnClickListener {
+public class EventMap extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemClickListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     //Map and list of events
-    //TODO: implement GPS for internal service
-    //Have a button that says "locate me" and move map to current location
+    //TODO: list event names which are called from database
 
     private GoogleMap mMap;
     String[] continents = {"North America", "South America", "Europe", "Asia", "Africa", "Antarctica", "Australia"};
+
+    protected GoogleApiClient mGoogleApiClient;
+    protected Marker markerLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +49,9 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
         Button btnBack = (Button)findViewById(R.id.btnBackPriority);
         btnBack.setOnClickListener(this);
 
+        Button btnMyLocation = (Button)findViewById(R.id.btnCurrentPos);
+        btnMyLocation.setOnClickListener(this);
+
         //ListView
         //TODO: populate array with events from database (those that have location tags)
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.map_list_view, continents);
@@ -44,6 +59,42 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
+
+        // Create an instance of GoogleAPIClient.
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        Log.i("Event Map", "Connection failed");
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
+        Log.i("Event Map", "Connection Suspended");
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -53,6 +104,36 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
             case R.id.btnBackPriority:
                 //bring to Main Options screen
                 startActivity(new Intent(this, MainActivity.class));
+                break;
+
+            case R.id.btnCurrentPos:
+                //Sensor Requirement
+                //On map, zoom in to user's current location, and add marker
+
+                if ( Build.VERSION.SDK_INT >= 23 &&
+                        ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                    //dialog to tell user to enable location services or enable them through code
+
+                    return  ;
+                }
+
+                if(markerLocation != null){
+                    markerLocation.remove();
+                }
+
+                Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+                LatLng latLong = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+
+                markerLocation = mMap.addMarker(new MarkerOptions().position(latLong).title("ME!"));
+
+                CameraPosition myPosition = new CameraPosition.Builder()
+                        .target(latLong).zoom(17).build();
+                mMap.animateCamera(
+                        CameraUpdateFactory.newCameraPosition(myPosition));
                 break;
         }
     }
@@ -102,4 +183,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
     }
+
+
+
 }
