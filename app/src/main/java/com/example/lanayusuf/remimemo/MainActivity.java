@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, EventMap.class));
                 break;
             case R.id.btnSettings:
+                startActivity(new Intent(this, PreferenceScreen.class));
                 break;
         }
     }
