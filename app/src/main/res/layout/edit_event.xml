@@ -1,128 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:context="com.example.lanayusuf.remimemo.MainActivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-    <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Done"
-            android:id="@+id/btn_done"
-            android:background="#A4C639"
-            android:layout_alignParentRight="true"/>
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/btn_cancel"
-            android:layout_alignParentLeft="true"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Done"
+                android:id="@+id/btn_done"
+                android:background="#A4C639"
+                android:layout_alignParentRight="true"/>
 
-    </RelativeLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:id="@+id/btn_cancel"
+                android:layout_alignParentLeft="true"/>
 
-    <TextView
-        android:id="@+id/txtView_name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="26dp"
-        android:text="Event Name" />
-
-    <EditText
-        android:id="@+id/editTxt_name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:hint="Event Name" />
-
-    <TextView
-        android:id="@+id/txtView_description"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="26dp"
-        android:text="Event Description" />
-
-    <EditText
-        android:id="@+id/editTxt_description"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:hint="Description" />
-
-
-    <RelativeLayout
-        android:id="@+id/layout_spinner"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/txtView_Priority"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtView_name"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="26dp"
-            android:text="Priority"
-            android:layout_alignParentLeft="true"/>
-
-        <Spinner
-            android:id="@+id/spinner_priority"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"/>
-
-    </RelativeLayout>
-
-
-    <EditText
-        android:id="@+id/editTxt_date"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="MM/DD/YYYY"
-        android:focusable="false"/>
-
-    <EditText
-        android:id="@+id/editTxt_time"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="HH:MM AM/PM"
-        android:focusable="false"/>
-
-
-
-    <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/txtView_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="26dp"
-            android:text="Location"
-            android:layout_alignParentLeft="true"/>
+            android:text="Event Name" />
 
         <EditText
-            android:id="@+id/editTxt_location"
-            android:layout_width="wrap_content"
+            android:id="@+id/editTxt_name"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Address"
-            android:layout_alignParentRight="true"/>
+            android:gravity="center_horizontal"
+            android:hint="Event Name" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/txtView_description"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="26dp"
+            android:text="Event Description" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:id="@+id/btn_delete"
-        android:background="#ff0000"/>
+        <EditText
+            android:id="@+id/editTxt_description"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:hint="Description" />
 
-</LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_spinner"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_Priority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="26dp"
+                android:text="Priority"
+                android:layout_alignParentLeft="true"/>
+
+            <Spinner
+                android:id="@+id/spinner_priority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+
+        <EditText
+            android:id="@+id/editTxt_date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="MM/DD/YYYY"
+            android:focusable="false"/>
+
+        <EditText
+            android:id="@+id/editTxt_time"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="HH:MM AM/PM"
+            android:focusable="false"/>
+
+
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="26dp"
+                android:text="Location"
+                android:layout_alignParentLeft="true"/>
+
+            <EditText
+                android:id="@+id/editTxt_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:id="@+id/btn_delete"
+            android:background="#ff0000"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -2,10 +2,12 @@ package com.example.lanayusuf.remimemo;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.format.DateFormat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -25,17 +28,20 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
 
     //EditEvent class for creating a new event
     //TODO: make EditEvent class for editing an existing class
-
-
+    private boolean error = true;
     private int day;
     private int month;
     private int year;
-    private EditText editTxtDate;
 
-    private EditText editTxtTime;
     private int hour;
     private int minute;
 
+    private Editable editEventName;
+    private Editable editEventDescription;
+    private Editable editEventLocation;
+    private EditText editTxtDate;
+    private EditText editTxtTime;
+    private EventRemimemo event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +60,22 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         Button btnDelete = (Button)findViewById(R.id.btn_delete);
         btnDelete.setOnClickListener(this);
 
+        event = new EventRemimemo();
+
         //User is able to edit the event name
         EditText editTxtEventName = (EditText) findViewById(R.id.editTxt_name);
         //listener to get event name
-        Editable eventName = editTxtEventName.getText();
+        editEventName = editTxtEventName.getText();
 
         //User is able to edit the event description
         EditText editTxtEventDescription = (EditText) findViewById(R.id.editTxt_description);
         //listener to get event description
-        Editable eventDescription = editTxtEventDescription.getText();
+        editEventDescription = editTxtEventDescription.getText();
 
         //User is able to add address location of event
         EditText editTxtEventLocation = (EditText) findViewById(R.id.editTxt_location);
         //listener to get event location
-        Editable eventLocation = editTxtEventLocation.getText();
+        editEventLocation = editTxtEventLocation.getText();
 
         //User selects priority of event
         Spinner spinner = (Spinner)findViewById(R.id.spinner_priority);
@@ -85,6 +93,7 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         //User clicks on text and time pops up
         editTxtTime = (EditText) findViewById(R.id.editTxt_time);
         editTxtTime.setOnClickListener(this);
+
     }
 
 
@@ -143,14 +152,33 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+
+        //If database not initialized, initialize it.
+        EventDBHandler.getInstance().initializeDB(v.getContext());
+
         switch (v.getId())
         {
             case R.id.btn_done:
                 //bring to previous Priority page with event updated
+                if(!error) {
+
+                    event.setEventName(editEventName.toString());
+                    event.setEventDescription(editEventDescription.toString());
+                    event.setEventLocation(editEventLocation.toString());
+                    event.setEditTxtDate(editTxtDate.getText().toString());
+                    event.setEditTxtTime(editTxtTime.getText().toString());
+
+                    EventDBHandler.getInstance().addOrUpdateEvent(event);
+                    startActivity(new Intent(this,HighPriority.class));
+
+                }else{
+                    displayError();
+                }
+
                 break;
 
             case R.id.btn_cancel:
-                //bring to previous Priority page with nothing done
+                startActivity(new Intent(this,HighPriority.class));
                 break;
 
             case R.id.btn_delete:
@@ -180,23 +208,25 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        switch (position) {
-            case 0:
-                // Throw error dialog pop-up. User needs to select a priority.
-                break;
-            case 1:
-                // Put event in High Priority page
-                break;
-            case 2:
-                // Put event in Low Priority page
-                break;
-            case 3:
-                // Put event in No Priority page
-                break;
+
+        if(position == 0){
+            error = true;
+        }else{
+            error = false;
+            event.setEventPriority(parent.getItemAtPosition(position).toString());
         }
     }
+
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
     }
+
+    public void displayError(){
+        Toast toast = Toast.makeText(this, "ERROR! Priority needs to be chosen!", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
+
+
 
 }

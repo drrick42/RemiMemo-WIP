@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by LanaYusuf on 10/19/2016.
  */
@@ -14,6 +16,7 @@ public class HighPriority extends AppCompatActivity implements View.OnClickListe
 
     //TODO: populate a list with events from database
     //When user clicks on event, bring to view event details page
+    private TextView text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,9 @@ public class HighPriority extends AppCompatActivity implements View.OnClickListe
 
         Button btnAddEvent = (Button)findViewById(R.id.btnAddEvent);
         btnAddEvent.setOnClickListener(this);
+
+        text = (TextView) findViewById(R.id.txtView_Events);
+        if(EventDBHandler.getInstance().isDatabaseExists()){printEvents();}
     }
 
     @Override
@@ -44,6 +50,20 @@ public class HighPriority extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, MainActivity.class));
                 break;
         }
+    }
+
+    public void printEvents(){
+        EventRemimemo event;
+        List<EventRemimemo> eventRemimemoList = EventDBHandler.getInstance().queryEvents("High");
+        String space = System.getProperty("line.separator");
+
+        for(int i =0; i < eventRemimemoList.size();i++){
+            event = eventRemimemoList.get(i);
+            text.append(event.getEventName() + space);
+            text.append(event.getEditTxtDate() + "    ");
+            text.append(event.getEditTxtTime() + space + space);
+        }
+
     }
 
 }

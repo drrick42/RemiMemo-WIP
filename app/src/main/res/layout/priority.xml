@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:context="com.example.lanayusuf.remimemo.MainActivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#3F51B5">
-
-        <Button
-            android:id="@+id/btnBackPriority"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:textSize="26sp"
-            android:layout_alignParentLeft="true"/>
 
         <TextView
             android:id="@+id/txtViewPriority"
@@ -26,14 +21,39 @@
             android:textSize="36sp"
             android:textColor="#031312"/>
 
+        <Button
+            android:id="@+id/btnBackPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtViewPriority"
+            android:text="Back"
+            android:textSize="26sp"
+            android:layout_alignParentLeft="true"/>
+
+        <Button
+            android:id="@+id/btnAddEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtViewPriority"
+            android:layout_alignParentRight="true"
+            android:text="+ Event"
+            android:textSize="26sp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/btnBackPriority"
+            android:background="#FFFFFF"
+            >
+
+            <TextView
+                android:id="@+id/txtView_Events"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="24sp"/>
+        </LinearLayout>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btnAddEvent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:text="+ Event"
-        android:textSize="26sp"/>
-
-</LinearLayout>
+</ScrollView>
