@@ -2,7 +2,6 @@ package com.example.lanayusuf.remimemo;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -64,6 +63,11 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         EditText editTxtEventDescription = (EditText) findViewById(R.id.editTxt_description);
         //listener to get event description
         Editable eventDescription = editTxtEventDescription.getText();
+
+        //User is able to add address location of event
+        EditText editTxtEventLocation = (EditText) findViewById(R.id.editTxt_location);
+        //listener to get event location
+        Editable eventLocation = editTxtEventLocation.getText();
 
         //User selects priority of event
         Spinner spinner = (Spinner)findViewById(R.id.spinner_priority);
