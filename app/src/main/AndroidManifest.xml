@@ -29,6 +29,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <uses-permission android:name="android.permission.VIBRATE" />
+        
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -62,6 +64,16 @@
         <activity
             android:name=".EditEvent"
             android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
     </application>
