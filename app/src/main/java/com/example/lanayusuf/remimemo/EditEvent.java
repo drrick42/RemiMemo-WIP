@@ -169,16 +169,21 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
                     event.setEditTxtTime(editTxtTime.getText().toString());
 
                     EventDBHandler.getInstance().addOrUpdateEvent(event);
-                    startActivity(new Intent(this,HighPriority.class));
+                    //startActivity(new Intent(this,HighPriority.class));
 
                 }else{
                     displayError();
                 }
 
+                finish();
+
                 break;
 
             case R.id.btn_cancel:
-                startActivity(new Intent(this,HighPriority.class));
+                //startActivity(new Intent(this,HighPriority.class));
+
+                finish();
+
                 break;
 
             case R.id.btn_delete:
