@@ -1,7 +1,10 @@
 package com.example.lanayusuf.remimemo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +30,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
 public class EventMap extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemClickListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     //Map and list of events
@@ -34,7 +39,11 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
     //TODO: get lat and long coordinates from address tagged in event description and put marker on map
 
     private GoogleMap mMap;
-    String[] continents = {"North America", "South America", "Europe", "Asia", "Africa", "Antarctica", "Australia"};
+    String[] eventNames = new String[10];
+    String[] eventLocations = new String[10];
+    int counter = 0;
+
+    String[] realEventNames;
 
     protected GoogleApiClient mGoogleApiClient;
     protected Marker markerLocation;
@@ -54,12 +63,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
         Button btnMyLocation = (Button)findViewById(R.id.btnCurrentPos);
         btnMyLocation.setOnClickListener(this);
 
-        //ListView
-        //TODO: populate array with events from database (those that have location tags)
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.map_list_view, continents);
-        ListView listView = (ListView) findViewById(R.id.list);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+
 
 
         // Create an instance of GoogleAPIClient.
@@ -71,6 +75,27 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     .build();
         }
     }
+
+    //code from http://stackoverflow.com/questions/3574644/how-can-i-find-the-latitude-and-longitude-from-address/27834110#27834110
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return p1;
+    }
+
 
     @Override
     protected void onStart() {
@@ -144,32 +169,76 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
 
     @Override
     public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-
+        LatLng latLong;
+        CameraPosition myPosition;
         //user clicks on event which moves the map to the location marker for that event
         switch (position)
         {
             case 0:
+                latLong = getLocationFromAddress(this, eventLocations[0]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[0]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 break;
             case 1:
+                latLong = getLocationFromAddress(this, eventLocations[1]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[1]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 break;
             case 2:
-                LatLng europe = new LatLng(54.5260, 15.2551);
-                mMap.addMarker(new MarkerOptions().position(europe).title("Europe"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(europe));
+                latLong = getLocationFromAddress(this, eventLocations[2]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[2]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 break;
             case 3:
-                LatLng asia = new LatLng(34.0479, 100.6197);
-                mMap.addMarker(new MarkerOptions().position(asia).title("Asia"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(asia));
+                latLong = getLocationFromAddress(this, eventLocations[3]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[3]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 break;
             case 4:
-                LatLng africa = new LatLng(8.7832, 34.5085);
-                mMap.addMarker(new MarkerOptions().position(africa).title("Africa"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(africa));
+                latLong = getLocationFromAddress(this, eventLocations[4]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[4]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 break;
             case 5:
+                latLong = getLocationFromAddress(this, eventLocations[5]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[5]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 break;
             case 6:
+                latLong = getLocationFromAddress(this, eventLocations[6]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[6]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                break;
+            case 7:
+                latLong = getLocationFromAddress(this, eventLocations[7]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[7]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                break;
+            case 8:
+                latLong = getLocationFromAddress(this, eventLocations[8]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[8]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                break;
+            case 9:
+                latLong = getLocationFromAddress(this, eventLocations[9]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[9]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                break;
+            case 10:
+                latLong = getLocationFromAddress(this, eventLocations[10]);
+                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[10]));
+                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 break;
         }
     }
@@ -186,8 +255,65 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        if (EventDBHandler.getInstance().isDatabaseExists()) {
+
+            //fill map list with event names that have an associated location
+            //add marker on map for each event
+            EventRemimemo event;
+            List<EventRemimemo> eventRemimemoList = EventDBHandler.getInstance().queryEvents("High");
+            for (int i = 0; i < eventRemimemoList.size(); i++) {
+                event = eventRemimemoList.get(i);
+                if (event.getEventLocation().length() != 0) {
+                    eventNames[counter] = event.getEventName();
+                    eventLocations[counter] = event.getEventLocation();
+                    counter++;
+                    LatLng latLong = getLocationFromAddress(this, event.getEventLocation());
+                    if (latLong != null) {
+                        mMap.addMarker(new MarkerOptions().position(latLong).title(event.getEventName()));
+                    }
+                }
+            }
+
+            eventRemimemoList = EventDBHandler.getInstance().queryEvents("Low");
+            for (int i = 0; i < eventRemimemoList.size(); i++) {
+                event = eventRemimemoList.get(i);
+                if (event.getEventLocation().length() != 0) {
+                    eventNames[counter] = event.getEventName();
+                    eventLocations[counter] = event.getEventLocation();
+                    counter++;
+                    LatLng latLong = getLocationFromAddress(this, event.getEventLocation());
+                    if (latLong != null) {
+                        mMap.addMarker(new MarkerOptions().position(latLong).title(event.getEventName()));
+                    }
+                }
+            }
+
+            eventRemimemoList = EventDBHandler.getInstance().queryEvents("None");
+            for (int i = 0; i < eventRemimemoList.size(); i++) {
+                event = eventRemimemoList.get(i);
+                if (event.getEventLocation().length() != 0) {
+                    eventNames[counter] = event.getEventName();
+                    eventLocations[counter] = event.getEventLocation();
+                    counter++;
+                    LatLng latLong = getLocationFromAddress(this, event.getEventLocation());
+                    if (latLong != null) {
+                        mMap.addMarker(new MarkerOptions().position(latLong).title(event.getEventName()));
+                    }
+                }
+            }
+
+            if (counter != 0) {
+                realEventNames = new String[counter];
+                for(int i = 0; i < counter; i++){
+                    realEventNames[i] = eventNames[i];
+                }
+
+                ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.map_list_view, realEventNames);
+                ListView listView = (ListView) findViewById(R.id.list);
+                listView.setAdapter(adapter);
+                listView.setOnItemClickListener(this);
+            }
+        }
     }
-
-
-
 }
