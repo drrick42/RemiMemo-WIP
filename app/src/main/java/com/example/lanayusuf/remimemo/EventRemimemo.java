@@ -5,7 +5,7 @@ package com.example.lanayusuf.remimemo;
  */
 
 public class EventRemimemo {
-    private long eventId;
+    private long eventId = -1L;
     private String eventName;
     private String eventDescription;
     private String location;

@@ -14,11 +14,14 @@ public class LowPriority extends Priority{
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent(this,EditEvent.class);
+        intent.putExtra("SUPER_CLASS_PRIORITY",getPriority());
+
         switch (v.getId())
         {
             case R.id.btnAddEvent:
                 //bring to edit event screen
-                startActivity(new Intent(this, EditEvent.class));
+                startActivity(intent);
                 break;
 
             case R.id.btnBackPriority:
@@ -28,7 +31,6 @@ public class LowPriority extends Priority{
             default:
                 for(int i=0;i<allButton.size();i++){
                     if(v.getId()==allButton.get(i).getButtonId()){
-                        Intent intent = new Intent(v.getContext(),EditEvent.class);
 
                         intent.putExtra("EVENT_ID",allButton.get(i).getEvent().getEventId());
                         intent.putExtra("EVENT_NAME",allButton.get(i).getEvent().getEventName());

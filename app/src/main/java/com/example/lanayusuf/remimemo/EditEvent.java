@@ -57,33 +57,27 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
 
         if (intent.hasExtra("EVENT_NAME")){
             editEventName.setText(intent.getStringExtra("EVENT_NAME"));
-            editEventName.setEnabled(false);
         }
 
         if (intent.hasExtra("EVENT_DESCRIPTION")){
             editEventDescription.setText(intent.getStringExtra("EVENT_DESCRIPTION"));
-            editEventDescription.setEnabled(false);
         }
 
         if (intent.hasExtra("EVENT_PRIORITY")){
             int spinner = mAdapter.getPosition(intent.getStringExtra("EVENT_PRIORITY"));
             editEventPriority.setSelection(spinner);
-            editEventPriority.setEnabled(false);
         }
 
         if (intent.hasExtra("EVENT_DATE")){
             editTxtDate.setText(intent.getStringExtra("EVENT_DATE"));
-            editTxtDate.setEnabled(false);
         }
 
         if (intent.hasExtra("EVENT_TIME")){
             editTxtTime.setText(intent.getStringExtra("EVENT_TIME"));
-            editTxtTime.setEnabled(false);
         }
 
         if(intent.hasExtra("EVENT_LOCATION")){
             editEventLocation.setText(intent.getStringExtra("EVENT_LOCATION"));
-            editEventLocation.setEnabled(false);
         }
 
     }
@@ -100,6 +94,10 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         //User clicks button when cancels creating event
         Button btnCancel = (Button)findViewById(R.id.btn_cancel);
         btnCancel.setOnClickListener(this);
+
+        //User clicks button when cancels creating event
+        Button btnDelete = (Button)findViewById(R.id.btn_delete);
+        btnDelete.setOnClickListener(this);
 
         event = new EventRemimemo();
 
@@ -204,16 +202,14 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
                     event.setEditTxtDate(editTxtDate.getText().toString());
                     event.setEditTxtTime(editTxtTime.getText().toString());
 
-                    EventDBHandler.getInstance().addEvent(event);
+                    if(event.getEventId() == -1L) {
+                        EventDBHandler.getInstance().addEvent(event);
+                    }else{
+                        EventDBHandler.getInstance().updateEvent(event);
+                    }
 
                     finish();
-                    if(event.getEventPriority().contentEquals(mPriority[1])){
-                        startActivity(new Intent(this, HighPriority.class));
-                    }else if(event.getEventPriority().contentEquals(mPriority[2])){
-                        startActivity(new Intent(this, LowPriority.class));
-                    }else {
-                        startActivity(new Intent(this, NoPriority.class));
-                    }
+                    chooseActivityToStart();
 
                 }else{
                     displayError();
@@ -225,6 +221,15 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
                 finish();
                 break;
 
+            case R.id.btn_delete:
+                if(event.getEventId()!=-1L){
+                    EventDBHandler.getInstance().deleteEvent(event);
+                }
+
+                finish();
+                chooseActivityToStart();
+
+                break;
 
             case R.id.editTxt_date:
                 //Calendar pop-up
@@ -268,6 +273,16 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         toast.show();
     }
 
+    private void chooseActivityToStart(){
+        Intent intent = getIntent();
 
+        if(intent.getStringExtra("SUPER_CLASS_PRIORITY").contentEquals(mPriority[1])){
+            startActivity(new Intent(this, HighPriority.class));
+        }else if(intent.getStringExtra("SUPER_CLASS_PRIORITY").contentEquals(mPriority[2])){
+            startActivity(new Intent(this, LowPriority.class));
+        }else {
+            startActivity(new Intent(this, NoPriority.class));
+        }
+    }
 
 }

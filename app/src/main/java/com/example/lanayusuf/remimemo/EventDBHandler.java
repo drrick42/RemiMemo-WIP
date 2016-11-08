@@ -72,6 +72,12 @@ public class EventDBHandler {
         mDatabase.update(EventTable.NAME, values,EventTable.Cols.EVENTID + " = ?", new String[]{event_id});
     }
 
+    public void deleteEvent(EventRemimemo event){
+        String event_id = Long.toString(event.getEventId());
+
+        mDatabase.delete(EventTable.NAME, EventTable.Cols.EVENTID + " = ?", new String[]{event_id});
+    }
+
     public List<EventRemimemo> queryEvents(String priority){
         String whereClause = EventTable.Cols.PRIORITY + " = ?";
         String[] whereArgs = new String[]{priority};

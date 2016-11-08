@@ -7,8 +7,8 @@
             android:fillViewport="true">
 
     <LinearLayout android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:weightSum="1">
 
         <RelativeLayout
@@ -37,7 +37,7 @@
             android:id="@+id/txtView_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="26dp"
+            android:textSize="26sp"
             android:text="Event Name" />
 
         <EditText
@@ -51,7 +51,7 @@
             android:id="@+id/txtView_description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="26dp"
+            android:textSize="26sp"
             android:text="Event Description" />
 
         <EditText
@@ -71,7 +71,7 @@
                 android:id="@+id/txtView_Priority"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="26dp"
+                android:textSize="26sp"
                 android:text="Priority"
                 android:layout_alignParentLeft="true"/>
 
@@ -111,7 +111,7 @@
                 android:id="@+id/txtView_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="26dp"
+                android:textSize="26sp"
                 android:text="Location"
                 android:layout_alignParentLeft="true"/>
 
@@ -121,6 +121,15 @@
                 android:layout_height="wrap_content"
                 android:hint="# Street City State Zip"
                 android:layout_alignParentRight="true"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DELETE"
+                android:id="@+id/btn_delete"
+                android:layout_below = "@id/txtView_location"
+                android:layout_marginTop="20sp"
+                android:background="#FF0000"/>
 
         </RelativeLayout>
 
