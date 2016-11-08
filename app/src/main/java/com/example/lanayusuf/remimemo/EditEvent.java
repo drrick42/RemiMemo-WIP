@@ -57,27 +57,33 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
 
         if (intent.hasExtra("EVENT_NAME")){
             editEventName.setText(intent.getStringExtra("EVENT_NAME"));
+            editEventName.setEnabled(false);
         }
 
         if (intent.hasExtra("EVENT_DESCRIPTION")){
             editEventDescription.setText(intent.getStringExtra("EVENT_DESCRIPTION"));
+            editEventDescription.setEnabled(false);
         }
 
         if (intent.hasExtra("EVENT_PRIORITY")){
             int spinner = mAdapter.getPosition(intent.getStringExtra("EVENT_PRIORITY"));
             editEventPriority.setSelection(spinner);
+            editEventPriority.setEnabled(false);
         }
 
         if (intent.hasExtra("EVENT_DATE")){
             editTxtDate.setText(intent.getStringExtra("EVENT_DATE"));
+            editTxtDate.setEnabled(false);
         }
 
         if (intent.hasExtra("EVENT_TIME")){
             editTxtTime.setText(intent.getStringExtra("EVENT_TIME"));
+            editTxtTime.setEnabled(false);
         }
 
         if(intent.hasExtra("EVENT_LOCATION")){
             editEventLocation.setText(intent.getStringExtra("EVENT_LOCATION"));
+            editEventLocation.setEnabled(false);
         }
 
     }
