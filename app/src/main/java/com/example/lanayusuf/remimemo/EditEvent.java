@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.View;
@@ -36,12 +35,52 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
     private int hour;
     private int minute;
 
-    private Editable editEventName;
-    private Editable editEventDescription;
-    private Editable editEventLocation;
+    private EditText editEventName;
+    private EditText editEventDescription;
+
+    private Spinner editEventPriority;
+    private ArrayAdapter<String> mAdapter;
+
+    private EditText editEventLocation;
     private EditText editTxtDate;
     private EditText editTxtTime;
+    private String[] mPriority = {"Select", "High", "Low", "None"};
     private EventRemimemo event;
+
+    public void setEventPage(){
+
+        Intent intent = getIntent();
+
+        if(intent.hasExtra("EVENT_ID")){
+            event.setEventId(intent.getLongExtra("EVENT_ID",-1L));
+        }
+
+        if (intent.hasExtra("EVENT_NAME")){
+            editEventName.setText(intent.getStringExtra("EVENT_NAME"));
+        }
+
+        if (intent.hasExtra("EVENT_DESCRIPTION")){
+            editEventDescription.setText(intent.getStringExtra("EVENT_DESCRIPTION"));
+        }
+
+        if (intent.hasExtra("EVENT_PRIORITY")){
+            int spinner = mAdapter.getPosition(intent.getStringExtra("EVENT_PRIORITY"));
+            editEventPriority.setSelection(spinner);
+        }
+
+        if (intent.hasExtra("EVENT_DATE")){
+            editTxtDate.setText(intent.getStringExtra("EVENT_DATE"));
+        }
+
+        if (intent.hasExtra("EVENT_TIME")){
+            editTxtTime.setText(intent.getStringExtra("EVENT_TIME"));
+        }
+
+        if(intent.hasExtra("EVENT_LOCATION")){
+            editEventLocation.setText(intent.getStringExtra("EVENT_LOCATION"));
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,41 +101,41 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
 
         event = new EventRemimemo();
 
+        //******SET UP PAGE VALUES******//
         //User is able to edit the event name
         EditText editTxtEventName = (EditText) findViewById(R.id.editTxt_name);
-        //listener to get event name
-        editEventName = editTxtEventName.getText();
-
         //User is able to edit the event description
         EditText editTxtEventDescription = (EditText) findViewById(R.id.editTxt_description);
-        //listener to get event description
-        editEventDescription = editTxtEventDescription.getText();
-
         //User is able to add address location of event
         EditText editTxtEventLocation = (EditText) findViewById(R.id.editTxt_location);
-        //listener to get event location
-        editEventLocation = editTxtEventLocation.getText();
 
-        //User selects priority of event
-        Spinner spinner = (Spinner)findViewById(R.id.spinner_priority);
-        String[] priority = {"Select", "High", "Low", "None"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, priority);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        //User selects mPriority of event
+        editEventPriority = (Spinner)findViewById(R.id.spinner_priority);
+        mAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, mPriority);
+        mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        editEventPriority.setAdapter(mAdapter);
 
         //User clicks on text and calendar pops up
         editTxtDate = (EditText) findViewById(R.id.editTxt_date);
-        editTxtDate.setOnClickListener(this);
-
         //User clicks on text and time pops up
         editTxtTime = (EditText) findViewById(R.id.editTxt_time);
+
+        //******SET EVENT VALUES******//
+        //listener to get event name
+        editEventName = editTxtEventName;
+        //listener to get event description
+        editEventDescription = editTxtEventDescription;
+        //listener to get event location
+        editEventLocation = editTxtEventLocation;
+        editEventPriority.setOnItemSelectedListener(this);
+        editTxtDate.setOnClickListener(this);
         editTxtTime.setOnClickListener(this);
 
+        //******SET INTENT VALUES IF EXISTS******//
+        setEventPage();
+
     }
-
-
 
     @Override
     public void onDateSet(DatePicker view, int years, int monthOfYear, int dayOfMonth) {
@@ -148,13 +187,8 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-
-
     @Override
     public void onClick(View v) {
-
-        //If database not initialized, initialize it.
-        EventDBHandler.getInstance().initializeDB(v.getContext());
 
         switch (v.getId())
         {
@@ -162,32 +196,36 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
                 //bring to previous Priority page with event updated
                 if(!error) {
 
-                    event.setEventName(editEventName.toString());
-                    event.setEventDescription(editEventDescription.toString());
-                    event.setEventLocation(editEventLocation.toString());
+                    event.setEventName(editEventName.getText().toString());
+                    event.setEventDescription(editEventDescription.getText().toString());
+                    event.setEventLocation(editEventLocation.getText().toString());
                     event.setEditTxtDate(editTxtDate.getText().toString());
                     event.setEditTxtTime(editTxtTime.getText().toString());
 
-                    EventDBHandler.getInstance().addOrUpdateEvent(event);
-                    //startActivity(new Intent(this,HighPriority.class));
+                    EventDBHandler.getInstance().addEvent(event);
+
+                    finish();
+                    if(event.getEventPriority().contentEquals(mPriority[1])){
+                        startActivity(new Intent(this, HighPriority.class));
+                    }else if(event.getEventPriority().contentEquals(mPriority[2])){
+                        startActivity(new Intent(this, LowPriority.class));
+                    }else {
+                        startActivity(new Intent(this, NoPriority.class));
+                    }
 
                 }else{
                     displayError();
                 }
 
-                finish();
-
                 break;
 
             case R.id.btn_cancel:
-                //startActivity(new Intent(this,HighPriority.class));
-
                 finish();
-
                 break;
 
             case R.id.btn_delete:
                 //bring to Priority page with event deleted
+                finish();
                 break;
 
             case R.id.editTxt_date:

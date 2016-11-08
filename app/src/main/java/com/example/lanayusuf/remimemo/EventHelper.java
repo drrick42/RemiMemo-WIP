@@ -14,13 +14,15 @@ public class EventHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "event.db";
 
+    public static String getDbName(){ return DATABASE_NAME; }
+
     public EventHelper(Context context){
         super(context,DATABASE_NAME,null,VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("create table "+ EventTable.NAME + "(" +
+        db.execSQL("create table if not exists "+ EventTable.NAME + "(" +
                 EventTable.Cols.EVENTID + " integer primary key autoincrement, " +
                 EventTable.Cols.EVENTNAME + ", " + EventTable.Cols.EVENTDESCRIPTION + ", " +
                 EventTable.Cols.PRIORITY + ", " + EventTable.Cols.DATE + ", " +

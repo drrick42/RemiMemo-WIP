@@ -1,53 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="20dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="20dp"
-    tools:context="com.example.lanayusuf.remimemo.MainActivity">
-
-    <Button
-        android:id="@+id/btnHighPriority"
-        android:layout_height="wrap_content"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:context="com.example.lanayusuf.remimemo.MainActivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:text="High Priority"
-        android:textSize="26sp"
-        android:layout_margin="20dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="20dp">
 
-    <Button
-        android:id="@+id/btnLowPriority"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Low Priority"
-        android:textSize="26sp"
-        android:layout_margin="20dp"/>
+        <Button
+            android:id="@+id/btnHighPriority"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="High Priority"
+            android:textSize="26sp"
+            android:layout_margin="20dp"/>
 
-    <Button
-        android:id="@+id/btnNoPriority"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="No Priority"
-        android:textSize="26sp"
-        android:layout_margin="20dp"/>
+        <Button
+            android:id="@+id/btnLowPriority"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Low Priority"
+            android:textSize="26sp"
+            android:layout_margin="20dp"/>
 
-    <Button
-        android:id="@+id/btnEventMap"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Event Map"
-        android:textSize="26sp"
-        android:layout_margin="20dp"/>
+        <Button
+            android:id="@+id/btnNoPriority"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="No Priority"
+            android:textSize="26sp"
+            android:layout_margin="20dp"/>
 
-    <Button
-        android:id="@+id/btnSettings"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Settings"
-        android:textSize="26sp"
-        android:layout_margin="20dp"/>
+        <Button
+            android:id="@+id/btnEventMap"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Event Map"
+            android:textSize="26sp"
+            android:layout_margin="20dp"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Settings"
+            android:textSize="26sp"
+            android:layout_margin="20dp"/>
+
+    </LinearLayout>
+</ScrollView>

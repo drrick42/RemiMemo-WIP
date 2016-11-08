@@ -1,34 +1,15 @@
 package com.example.lanayusuf.remimemo;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 /**
  * Created by LanaYusuf on 10/19/2016.
  */
-public class NoPriority extends AppCompatActivity implements View.OnClickListener{
+public class NoPriority extends Priority{
 
-    //TODO: populate a list with events from database
-    //When user clicks on event, bring to view event details page
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.priority);
-
-        TextView priority = (TextView)findViewById(R.id.txtViewPriority);
-        priority.setText("No Priority");
-
-        Button btnBack = (Button)findViewById(R.id.btnBackPriority);
-        btnBack.setOnClickListener(this);
-
-        Button btnAddEvent = (Button)findViewById(R.id.btnAddEvent);
-        btnAddEvent.setOnClickListener(this);
-
+    public NoPriority(){
+        setPriority("None");
     }
 
     @Override
@@ -44,6 +25,23 @@ public class NoPriority extends AppCompatActivity implements View.OnClickListene
                 //bring to Main Options screen
                 startActivity(new Intent(this, MainActivity.class));
                 break;
+            default:
+                for(int i=0;i<allButton.size();i++){
+                    if(v.getId()==allButton.get(i).getButtonId()){
+                        Intent intent = new Intent(v.getContext(),EditEvent.class);
+
+                        intent.putExtra("EVENT_ID",allButton.get(i).getEvent().getEventId());
+                        intent.putExtra("EVENT_NAME",allButton.get(i).getEvent().getEventName());
+                        intent.putExtra("EVENT_DESCRIPTION",allButton.get(i).getEvent().getEventDescription());
+                        intent.putExtra("EVENT_PRIORITY",allButton.get(i).getEvent().getEventPriority());
+                        intent.putExtra("EVENT_DATE",allButton.get(i).getEvent().getEditTxtDate());
+                        intent.putExtra("EVENT_TIME",allButton.get(i).getEvent().getEditTxtTime());
+                        intent.putExtra("EVENT_LOCATION",allButton.get(i).getEvent().getEventLocation());
+
+                        startActivity(intent);
+                        break;
+                    }
+                }
 
         }
     }

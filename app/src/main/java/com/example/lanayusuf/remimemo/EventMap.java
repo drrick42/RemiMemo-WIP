@@ -259,7 +259,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (EventDBHandler.getInstance().isDatabaseExists()) {
+        if (EventDBHandler.getInstance().isDatabaseExists(this)) {
 
             //fill map list with event names that have an associated location
             //add marker on map for each event

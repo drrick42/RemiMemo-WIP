@@ -5,6 +5,7 @@ package com.example.lanayusuf.remimemo;
  */
 
 public class EventRemimemo {
+    private long eventId;
     private String eventName;
     private String eventDescription;
     private String location;
@@ -18,8 +19,13 @@ public class EventRemimemo {
         //Only allows initialization
     }
 
-    public int getEventId(){
-        return 0;
+    public void setEventId(long id){
+        //listener to get event id
+        eventId = id;
+    }
+
+    public long getEventId(){
+        return eventId;
     }
 
     public void setEventName(String event){

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.lanayusuf.remimemo.EventDbSchema.EventTable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,6 @@ public class EventDBHandler {
 
     private static Context mContext;
     private static SQLiteDatabase mDatabase;
-    private static boolean databaseExists = false;
 
     private EventDBHandler(){
         //Only here for instantiation purpose
@@ -30,14 +30,14 @@ public class EventDBHandler {
         return INSTANCE;
     }
 
-    public boolean isDatabaseExists(){ return databaseExists; }
+    public static boolean isDatabaseExists(Context context){
+        File file = context.getDatabasePath(EventHelper.getDbName());
+        return file.exists();
+    }
 
     public void initializeDB(Context context){
-        if(!databaseExists) {
-            mContext = context.getApplicationContext();
-            mDatabase = new EventHelper(mContext).getWritableDatabase();
-            databaseExists = true;
-        }
+        mContext = context.getApplicationContext();
+        mDatabase = new EventHelper(mContext).getWritableDatabase();
     }
 
     private static ContentValues getContentValues(EventRemimemo event){
@@ -58,13 +58,18 @@ public class EventDBHandler {
         return values;
     }
 
-    public void addOrUpdateEvent(EventRemimemo event){
+    public void addEvent(EventRemimemo event){
         ContentValues values = getContentValues(event);
 
         mDatabase.insert(EventTable.NAME,null,values);
 
-        //String event_id = Integer.toString(event.getEventId());
-        //mDatabase.update(EventTable.NAME, values,EventTable.Cols.EVENTID + " = ?", new String[]{event_id});
+    }
+
+    public void updateEvent(EventRemimemo event){
+        ContentValues values = getContentValues(event);
+        String event_id = Long.toString(event.getEventId());
+
+        mDatabase.update(EventTable.NAME, values,EventTable.Cols.EVENTID + " = ?", new String[]{event_id});
     }
 
     public List<EventRemimemo> queryEvents(String priority){
@@ -85,24 +90,29 @@ public class EventDBHandler {
     }
 
     private List<EventRemimemo> listEvent(Cursor cursor){
-        List<EventRemimemo> events = new ArrayList<EventRemimemo>();
+        List<EventRemimemo> events = new ArrayList<>();
 
         if(cursor.moveToFirst()){
             do {
-                EventRemimemo oneEvent = new EventRemimemo();
-
-                oneEvent.setEventName(cursor.getString(cursor.getColumnIndex(EventTable.Cols.EVENTNAME)));
-                oneEvent.setEventDescription(cursor.getString(cursor.getColumnIndex(EventTable.Cols.EVENTDESCRIPTION)));
-                oneEvent.setEventPriority(cursor.getString(cursor.getColumnIndex(EventTable.Cols.PRIORITY)));
-                oneEvent.setEditTxtDate(cursor.getString(cursor.getColumnIndex(EventTable.Cols.DATE)));
-                oneEvent.setEditTxtTime(cursor.getString(cursor.getColumnIndex(EventTable.Cols.TIME)));
-                oneEvent.setEventLocation(cursor.getString(cursor.getColumnIndex(EventTable.Cols.LOCATION)));
-
-                events.add(oneEvent);
+                events.add(listOneEvent(cursor));
             } while (cursor.moveToNext());
         }
 
         return events;
+    }
+
+    private EventRemimemo listOneEvent(Cursor cursor){
+        EventRemimemo oneEvent = new EventRemimemo();
+
+        oneEvent.setEventId(cursor.getLong(cursor.getColumnIndex(EventTable.Cols.EVENTID)));
+        oneEvent.setEventName(cursor.getString(cursor.getColumnIndex(EventTable.Cols.EVENTNAME)));
+        oneEvent.setEventDescription(cursor.getString(cursor.getColumnIndex(EventTable.Cols.EVENTDESCRIPTION)));
+        oneEvent.setEventPriority(cursor.getString(cursor.getColumnIndex(EventTable.Cols.PRIORITY)));
+        oneEvent.setEditTxtDate(cursor.getString(cursor.getColumnIndex(EventTable.Cols.DATE)));
+        oneEvent.setEditTxtTime(cursor.getString(cursor.getColumnIndex(EventTable.Cols.TIME)));
+        oneEvent.setEventLocation(cursor.getString(cursor.getColumnIndex(EventTable.Cols.LOCATION)));
+
+        return oneEvent;
     }
 
 }

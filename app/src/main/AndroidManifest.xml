@@ -49,20 +49,17 @@
 
         <activity
             android:name=".HighPriority"
-            android:screenOrientation="portrait"
-            android:noHistory="true">
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".LowPriority"
-            android:screenOrientation="portrait"
-            android:noHistory="true">
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".NoPriority"
-            android:screenOrientation="portrait"
-            android:noHistory="true">
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
@@ -74,11 +71,6 @@
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
     </application>
