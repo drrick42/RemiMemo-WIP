@@ -154,14 +154,17 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
 
                     //get current location
                     Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-                    LatLng latLong = new LatLng(location.getLatitude(),location.getLongitude());
+                    if(location != null){
+                        LatLng latLong = new LatLng(location.getLatitude(),location.getLongitude());
 
-                    //add marker on current location
-                    markerLocation = mMap.addMarker(new MarkerOptions().position(latLong).title("ME!"));
+                        //add marker on current location
+                        markerLocation = mMap.addMarker(new MarkerOptions().position(latLong).title("ME!"));
 
-                    //move map/camera to current location
-                    CameraPosition myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                        //move map/camera to current location
+                        CameraPosition myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                    }
+
                 }
                 break;
         }
