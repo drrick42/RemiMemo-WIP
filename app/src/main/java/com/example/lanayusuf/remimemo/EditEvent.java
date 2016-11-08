@@ -95,10 +95,6 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         Button btnCancel = (Button)findViewById(R.id.btn_cancel);
         btnCancel.setOnClickListener(this);
 
-        //User clicks button to delete event
-        Button btnDelete = (Button)findViewById(R.id.btn_delete);
-        btnDelete.setOnClickListener(this);
-
         event = new EventRemimemo();
 
         //******SET UP PAGE VALUES******//
@@ -223,10 +219,6 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
                 finish();
                 break;
 
-            case R.id.btn_delete:
-                //bring to Priority page with event deleted
-                finish();
-                break;
 
             case R.id.editTxt_date:
                 //Calendar pop-up
