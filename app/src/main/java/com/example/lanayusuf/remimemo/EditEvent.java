@@ -207,9 +207,9 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
 
             if(hour<10){
                 if(minute < 10){
-                    editTxtTime.setText(new StringBuilder().append("0").append(hour).append(":").append("0").append(minute).append(" AM"));
+                    editTxtTime.setText(new StringBuilder().append("0").append(hour).append(":").append("0").append(minute).append(" PM"));
                 }else{
-                    editTxtTime.setText(new StringBuilder().append("0").append(hour).append(":").append(minute).append(" AM"));
+                    editTxtTime.setText(new StringBuilder().append("0").append(hour).append(":").append(minute).append(" PM"));
                 }
             }else{
                 if(minute < 10){
