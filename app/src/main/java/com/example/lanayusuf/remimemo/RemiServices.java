@@ -163,6 +163,9 @@ public class RemiServices extends Service {
     }
 
     private Date getDate(String date, String time) throws ParseException {
+        System.out.println("this is date " + date);
+        System.out.println("this is time " + time);
+
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/YYYY HH:mm");
         String tempTime = time;
         if (time.contains("PM")) {
