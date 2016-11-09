@@ -106,6 +106,7 @@ public class RemiServices extends Service {
         priorityAlertOptions[1] = getPrioritySetting(settings, "low_pri_alert_pref");
         priorityAlertOptions[2] = getPrioritySetting(settings, "no_pri_alert_pref");
         for (int i = 0; i < eventNames.length; i++) {
+            setAlert[i] = false;
             if (eventNames[i].length() > 0) {
                 int priority_type = 0;
                 switch (eventPriorities[i])
@@ -121,24 +122,27 @@ public class RemiServices extends Service {
                         break;
                 }
                 try {
-                    Date event_date = getDate(eventDates[i], eventTimes[i]);
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(event_date);
-                    setAlert[i] = true;
-                    if (priorityAlertOptions[priority_type] == 24) {
-                        // set eventDateAlerts back one day
-                        cal.add(Calendar.DAY_OF_MONTH, -1);
-                    } else if (priorityAlertOptions[priority_type] == 1) {
-                        //set eventTimeAlerts back an hour, and eventDateAlerts back a day if necessary
-                        cal.add(Calendar.HOUR_OF_DAY, -1);
-                    } else if (priorityAlertOptions[priority_type] == 2) {
-                        //set eventTimeAlerts back two hours, and eventDateAlerts back a day if necessary
-                        cal.add(Calendar.HOUR_OF_DAY, -2);
-                    } else {
-                        //no alert
-                        setAlert[i] = false;
+                    if (eventDates[i].length() > 0 && eventTimes[i].length() > 0) {
+                        Date event_date = getDate(eventDates[i], eventTimes[i]);
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(event_date);
+                        if (priorityAlertOptions[priority_type] == 24) {
+                            // set eventDateAlerts back one day
+                            cal.add(Calendar.DAY_OF_MONTH, -1);
+                            setAlert[i] = true;
+                        } else if (priorityAlertOptions[priority_type] == 1) {
+                            //set eventTimeAlerts back an hour, and eventDateAlerts back a day if necessary
+                            cal.add(Calendar.HOUR_OF_DAY, -1);
+                            setAlert[i] = true;
+                        } else if (priorityAlertOptions[priority_type] == 2) {
+                            //set eventTimeAlerts back two hours, and eventDateAlerts back a day if necessary
+                            cal.add(Calendar.HOUR_OF_DAY, -2);
+                            setAlert[i] = true;
+                        } else {
+                            //no alert
+                        }
+                        eventAlerts[i] = cal.getTime();
                     }
-                    eventAlerts[i] = cal.getTime();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
