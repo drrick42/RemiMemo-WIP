@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSettings.setOnClickListener(this);
 
         if (!isMyServiceRunning()){
-            Intent serviceIntent = new Intent("your.package.MyService");
+            Intent serviceIntent = new Intent("your.package.RemiServices");
             startService(serviceIntent);
         }
     }
