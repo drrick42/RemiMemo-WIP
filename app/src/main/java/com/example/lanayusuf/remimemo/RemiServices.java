@@ -170,8 +170,8 @@ public class RemiServices extends Service {
         System.out.println("this is date " + date);
         System.out.println("this is time " + time);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/YYYY HH:mm");
-        String tempTime = time;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/YYYY hh:mm aa");
+        /*** String tempTime = time;
         if (time.contains("PM")) {
             String oldHour = time.substring(0,2);
             int hourInt = Integer.parseInt(oldHour);
@@ -181,7 +181,10 @@ public class RemiServices extends Service {
         }
         String fullDate = date;
         fullDate.concat(" ");
-        fullDate.concat(tempTime.substring(0,tempTime.length()-3));
+        fullDate.concat(tempTime.substring(0,tempTime.length()-3)); ***/
+        String fullDate = date;
+        fullDate.concat(" ");
+        fullDate.concat(time);
         return sdf.parse(fullDate);
     }
 
