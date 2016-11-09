@@ -172,12 +172,12 @@ public class RemiServices extends Service {
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/YYYY HH:mm");
         String tempTime = time;
-        if (time.contains("PM")) {
+        if (time.contains("PM") || time.contains("AM")) {
             String oldHour = time.substring(0,2);
             int hourInt = Integer.parseInt(oldHour);
             hourInt = hourInt + 12;
             String newHour = Integer.toString(hourInt);
-            tempTime.replace(oldHour, newHour);
+            tempTime = tempTime.replace(oldHour, newHour);
         }
         String fullDate = date;
         fullDate.concat(" ");

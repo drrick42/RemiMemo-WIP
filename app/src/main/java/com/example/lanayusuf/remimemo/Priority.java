@@ -36,9 +36,6 @@ public abstract class Priority extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.priority);
 
-        //If database not initialized, initialize it.
-        EventDBHandler.getInstance().initializeDB(this);
-
         TextView priority = (TextView)findViewById(R.id.txtViewPriority);
         String setTxt = getPriority()+" Priority";
         priority.setText(setTxt);

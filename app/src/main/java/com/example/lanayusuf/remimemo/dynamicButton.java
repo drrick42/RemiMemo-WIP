@@ -7,7 +7,7 @@ import android.widget.Button;
  * Created by areally on 11/7/2016.
  */
 
-class DynamicButton {
+public class DynamicButton {
     private EventRemimemo oneEvent;
     private Button button;
     private int buttonId;
