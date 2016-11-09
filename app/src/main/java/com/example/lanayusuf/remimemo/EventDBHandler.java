@@ -31,8 +31,19 @@ public class EventDBHandler {
     }
 
     public static boolean isDatabaseExists(Context context){
+        boolean success = false;
         File file = context.getDatabasePath(EventHelper.getDbName());
-        return file.exists();
+        if(file.exists()){
+            SQLiteDatabase db = new EventHelper(context.getApplicationContext()).getWritableDatabase();
+            Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + EventTable.NAME, null);
+            if(cursor!=null){
+                cursor.moveToFirst();
+                if(cursor.getInt(0)!=0){//If there are rows
+                    success = true;
+                }
+            }
+        }
+        return success;
     }
 
     public static void initializeDB(Context context){

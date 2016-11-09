@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "+++ onCreate() +++");
         setContentView(R.layout.activity_main);
 
+        //If database not initialized, initialize it.
+        EventDBHandler.getInstance().initializeDB(this);
+
         View btnHighPriority = findViewById(R.id.btnHighPriority);
         btnHighPriority.setOnClickListener(this);
         View btnLowPriority = findViewById(R.id.btnLowPriority);
