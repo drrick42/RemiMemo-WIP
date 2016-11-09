@@ -147,7 +147,24 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
 
     // updates the date in the date EditText
     private void updateDate() {
-        editTxtDate.setText(new StringBuilder().append(month + 1).append("/").append(day).append("/").append(year));
+        String date = "";
+        if(month+1 < 10) {
+            date += "0" + Integer.toString(month+1);
+        }else{
+            date += Integer.toString(month+1);
+        }
+
+        date += "/";
+
+        if(day < 10){
+            date += "0" + Integer.toString(day);
+        }else{
+            date += Integer.toString(day);
+        }
+
+        date += "/"+ Integer.toString(year);
+
+        editTxtDate.setText(date);
     }
 
     @Override
@@ -166,24 +183,42 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
             }else{
                 editTxtTime.setText(new StringBuilder().append("12").append(":").append(minute).append(" AM"));
             }
+        }else if(hour<10){
+            if(minute < 10){
+                editTxtTime.setText(new StringBuilder().append("0").append(hour).append(":").append("0").append(minute).append(" AM"));
+            }else{
+                editTxtTime.setText(new StringBuilder().append("0").append(hour).append(":").append(minute).append(" AM"));
+            }
+        }else if(hour>=10 && hour < 12){
+            if(minute < 10){
+                editTxtTime.setText(new StringBuilder().append(hour).append(":").append("0").append(minute).append(" AM"));
+            }else{
+                editTxtTime.setText(new StringBuilder().append(hour).append(":").append(minute).append(" AM"));
+            }
         }else if(hour == 12){
             if(minute < 10){
                 editTxtTime.setText(new StringBuilder().append(hour).append(":").append("0").append(minute).append(" PM"));
             }else{
                 editTxtTime.setText(new StringBuilder().append(hour).append(":").append(minute).append(" PM"));
             }
-        }else if(hour < 12){
-            if(minute < 10){
-                editTxtTime.setText(new StringBuilder().append(hour).append(":").append("0").append(minute).append(" AM"));
+        }else{ //When hour larger than 12
+
+            hour -= 12;
+
+            if(hour<10){
+                if(minute < 10){
+                    editTxtTime.setText(new StringBuilder().append("0").append(hour).append(":").append("0").append(minute).append(" AM"));
+                }else{
+                    editTxtTime.setText(new StringBuilder().append("0").append(hour).append(":").append(minute).append(" AM"));
+                }
             }else{
-                editTxtTime.setText(new StringBuilder().append(hour).append(":").append(minute).append(" AM"));
+                if(minute < 10){
+                    editTxtTime.setText(new StringBuilder().append(hour).append(":").append("0").append(minute).append(" PM"));
+                }else{
+                    editTxtTime.setText(new StringBuilder().append(hour).append(":").append(minute).append(" PM"));
+                }
             }
-        }else{
-            if(minute < 10){
-                editTxtTime.setText(new StringBuilder().append(hour-12).append(":").append("0").append(minute).append(" PM"));
-            }else{
-                editTxtTime.setText(new StringBuilder().append(hour-12).append(":").append(minute).append(" PM"));
-            }
+
         }
     }
 
