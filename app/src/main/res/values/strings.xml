@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">RemiMemo</string>
     <string name="title_activity_maps">Map</string>
+    <string name="high_priority">High Priority</string>
+    <string name="low_priority">Low Priority</string>
+    <string name="no_priority">No Priority</string>
 </resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="priority_alerts">
+        <item>Alert me never</item>
+        <item>Alert me 1 hour before</item>
+        <item>Alert me 2 hours before</item>
+        <item>Alert me 24 hours before</item>
+    </string-array>
+
+    <string-array name="high_pri_alert">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="low_pri_alert">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="no_pri_alert">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="priority_sounds">
+        <item>Set Sound OFF</item>
+        <item>Set Sound ON</item>
+    </string-array>
+
+    <string-array name="high_pri_sound">
+        <item>OFF</item>
+        <item>ON</item>
+    </string-array>
+
+    <string-array name="low_pri_sound">
+        <item>OFF</item>
+        <item>ON</item>
+    </string-array>
+
+    <string-array name="no_pri_sound">
+        <item>OFF</item>
+        <item>ON</item>
+    </string-array>
+</resources>

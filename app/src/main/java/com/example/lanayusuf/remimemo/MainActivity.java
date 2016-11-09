@@ -1,5 +1,7 @@
 package com.example.lanayusuf.remimemo;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View btnSettings = findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(this);
 
+        if (!isMyServiceRunning()){
+            Intent serviceIntent = new Intent("your.package.MyService");
+            startService(serviceIntent);
+        }
     }
 
     @Override
@@ -48,8 +54,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, EventMap.class));
                 break;
             case R.id.btnSettings:
-                startActivity(new Intent(this, PreferenceScreen.class));
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
         }
+    }
+
+    private boolean isMyServiceRunning() {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (RemiServices.class.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
