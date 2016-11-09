@@ -65,6 +65,7 @@ public class RemiServices extends Service {
             eventTimes[i] = "";
         }
 
+        EventDBHandler.initializeDB(this);
         if (EventDBHandler.getInstance().isDatabaseExists(this)) {
             EventRemimemo event;
             List<EventRemimemo> eventRemimemoList = EventDBHandler.getInstance().queryEvents("High");

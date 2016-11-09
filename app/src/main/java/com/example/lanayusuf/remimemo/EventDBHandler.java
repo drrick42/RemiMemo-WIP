@@ -35,7 +35,7 @@ public class EventDBHandler {
         return file.exists();
     }
 
-    public void initializeDB(Context context){
+    public static void initializeDB(Context context){
         mContext = context.getApplicationContext();
         mDatabase = new EventHelper(mContext).getWritableDatabase();
     }
