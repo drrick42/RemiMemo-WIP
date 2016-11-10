@@ -12,11 +12,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -161,6 +163,10 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                         //move map/camera to current location
                         CameraPosition myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                    }else{
+                        Toast toast = Toast.makeText(this, "No location detected!", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
+                        toast.show();
                     }
 
                 }

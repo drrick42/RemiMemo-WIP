@@ -34,10 +34,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View btnSettings = findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(this);
 
+        /*
+
         if (!isMyServiceRunning()){
                 Intent serviceIntent = new Intent(this, RemiServices.class);
                 this.startService(serviceIntent);
         }
+
+        */
     }
 
     @Override
