@@ -130,31 +130,33 @@ public class RemiServices extends Service implements SharedPreferences.OnSharedP
                         priority_type = 2;
                         break;
                 }
-                try {
-                    if (eventDates[i].length() > 0 && eventTimes[i].length() > 0) {
-                        Date event_date = getDate(eventDates[i], eventTimes[i]);
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTime(event_date);
-                        if (priorityAlertOptions[priority_type] == 24) {
-                            // set eventDateAlerts back one day
-                            cal.add(Calendar.DAY_OF_MONTH, -1);
-                            setAlert[i] = true;
-                        } else if (priorityAlertOptions[priority_type] == 1) {
-                            //set eventTimeAlerts back an hour, and eventDateAlerts back a day if necessary
-                            cal.add(Calendar.HOUR_OF_DAY, -1);
-                            setAlert[i] = true;
-                        } else if (priorityAlertOptions[priority_type] == 2) {
-                            //set eventTimeAlerts back two hours, and eventDateAlerts back a day if necessary
-                            cal.add(Calendar.HOUR_OF_DAY, -2);
-                            setAlert[i] = true;
-                        } else {
-                            //no alert
+                if (!eventTimes[i].contains("HH")) {
+                        try {
+                            if (eventDates[i].length() > 0 && eventTimes[i].length() > 0) {
+                                Date event_date = getDate(eventDates[i], eventTimes[i]);
+                                Calendar cal = Calendar.getInstance();
+                                cal.setTime(event_date);
+                                if (priorityAlertOptions[priority_type] == 24) {
+                                    // set eventDateAlerts back one day
+                                    cal.add(Calendar.DAY_OF_MONTH, -1);
+                                    setAlert[i] = true;
+                                } else if (priorityAlertOptions[priority_type] == 1) {
+                                    //set eventTimeAlerts back an hour, and eventDateAlerts back a day if necessary
+                                    cal.add(Calendar.HOUR_OF_DAY, -1);
+                                    setAlert[i] = true;
+                                } else if (priorityAlertOptions[priority_type] == 2) {
+                                    //set eventTimeAlerts back two hours, and eventDateAlerts back a day if necessary
+                                    cal.add(Calendar.HOUR_OF_DAY, -2);
+                                    setAlert[i] = true;
+                                } else {
+                                    //no alert
+                                }
+                                eventAlerts[i] = cal.getTime();
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
-                        eventAlerts[i] = cal.getTime();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
             }
         }
     }
