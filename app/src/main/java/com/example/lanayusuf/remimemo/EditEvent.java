@@ -26,7 +26,6 @@ import java.util.TimeZone;
 public class EditEvent extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
     //EditEvent class for creating a new event
-    //TODO: make EditEvent class for editing an existing class
     private boolean error = true;
     private int day;
     private int month;

@@ -35,8 +35,6 @@ import java.util.List;
 public class EventMap extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemClickListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     //Map and list of events
-    //TODO: list event names which are called from database
-    //TODO: get lat and long coordinates from address tagged in event description and put marker on map
 
     private GoogleMap mMap;
     String[] eventNames = new String[10];
