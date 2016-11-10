@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.Button;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +20,7 @@ import java.util.List;
 /**
  * Created by Derrick on 11/5/2016.
  */
-public class RemiServices extends Service {
+public class RemiServices extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static int LIMIT = 10;
     public String[] eventNames = new String[LIMIT];
@@ -36,6 +38,8 @@ public class RemiServices extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         // START YOUR TASKS
         setNotifications();
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+
         return super.onStartCommand(intent, flags, startId);
 
     }
@@ -55,6 +59,11 @@ public class RemiServices extends Service {
         getEvents();
         setAlertTimes();
         createNotifications();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        setNotifications();
     }
 
     private void getEvents() {

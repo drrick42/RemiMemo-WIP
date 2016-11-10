@@ -1,11 +1,8 @@
 package com.example.lanayusuf.remimemo;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import android.support.v7.app.AppCompatActivity;
 
 public class SettingsActivity extends PreferenceActivity {
 
