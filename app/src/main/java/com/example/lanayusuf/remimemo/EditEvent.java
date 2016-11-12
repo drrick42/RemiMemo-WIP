@@ -283,6 +283,7 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
                 timePickerdialog.show();
                 break;
         }
+        RemiNotifier.getInstance().setNotifications(this);
     }
 
 
