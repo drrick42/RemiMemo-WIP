@@ -111,7 +111,7 @@ public class RemiNotifier {
                         priority_type = 2;
                         break;
                 }
-                if (!eventTimes[i].contains("HH")) {
+                if (!eventTimes[i].contains("mm")) {
                     try {
                         if (eventDates[i].length() > 0 && eventTimes[i].length() > 0) {
                             Date event_date = getDate(eventDates[i], eventTimes[i]);
@@ -160,14 +160,6 @@ public class RemiNotifier {
 
     private Date getDate(String date, String time) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
-        String tempTime = time;
-        if (time.contains("PM") || time.contains("AM")) {
-            String oldHour = time.substring(0,2);
-            int hourInt = Integer.parseInt(oldHour);
-            hourInt = hourInt + 12;
-            String newHour = Integer.toString(hourInt);
-            time = tempTime.replace(oldHour, newHour);
-        }
         String fullDate = date;
         fullDate.concat(" ");
         fullDate.concat(time);
