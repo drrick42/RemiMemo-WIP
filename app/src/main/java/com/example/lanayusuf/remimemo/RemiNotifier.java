@@ -22,6 +22,14 @@ public class RemiNotifier {
 
     private RemiNotifier(){
         //Only here for instantiation purpose
+        eventNames = new String[LIMIT];
+        eventPriorities = new String[LIMIT];
+        eventTimes = new String[LIMIT];
+        eventDates = new String[LIMIT];
+        eventAlerts = new Date[LIMIT];
+        priorityAlertOptions = new int[3];
+        setAlert = new boolean[LIMIT];
+        intents = new PendingIntent[LIMIT];
     }
 
     public static RemiNotifier getInstance(){
@@ -29,17 +37,15 @@ public class RemiNotifier {
     }
 
     private static int LIMIT = 10;
-    public String[] eventNames = new String[LIMIT];
-    public String[] eventPriorities = new String[LIMIT];
-    public String[] eventTimes = new String[LIMIT];
-    public String[] eventDates = new String[LIMIT];
-    public Date[] eventAlerts = new Date[LIMIT];
 
-    public int[] priorityAlertOptions = new int[3];
-
-    public boolean[] setAlert = new boolean[LIMIT];
-
-    public PendingIntent[] intents = new PendingIntent[LIMIT];
+    public String[] eventNames;
+    public String[] eventPriorities;
+    public String[] eventTimes;
+    public String[] eventDates;
+    public Date[] eventAlerts;
+    public int[] priorityAlertOptions;
+    public boolean[] setAlert;
+    public PendingIntent[] intents;
 
     public void setNotifications(Context context) {
         getEvents(context);
@@ -49,7 +55,7 @@ public class RemiNotifier {
 
     private void getEvents(Context context) {
         int counter = 0;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < LIMIT; i++) {
             eventNames[i] = "";
             eventPriorities[i] = "";
             eventTimes[i] = "";
