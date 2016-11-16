@@ -18,22 +18,20 @@ import java.util.List;
  */
 public class RemiNotifier {
 
-    private final static RemiNotifier INSTANCE = new RemiNotifier();
-
-    private RemiNotifier(){
+    private RemiNotifier(int init){
         //Only here for instantiation purpose
-        eventNames = new String[LIMIT];
-        eventPriorities = new String[LIMIT];
-        eventTimes = new String[LIMIT];
-        eventDates = new String[LIMIT];
-        eventAlerts = new Date[LIMIT];
+        eventNames = new String[init];
+        eventPriorities = new String[init];
+        eventTimes = new String[init];
+        eventDates = new String[init];
+        eventAlerts = new Date[init];
         priorityAlertOptions = new int[3];
-        setAlert = new boolean[LIMIT];
-        intents = new PendingIntent[LIMIT];
+        setAlert = new boolean[init];
+        intents = new PendingIntent[init];
     }
 
     public static RemiNotifier getInstance(){
-        return INSTANCE;
+        return new RemiNotifier(LIMIT);
     }
 
     private static int LIMIT = 10;
