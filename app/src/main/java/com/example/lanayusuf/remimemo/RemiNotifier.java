@@ -163,11 +163,18 @@ public class RemiNotifier {
     }
 
     private Date getDate(String date, String time) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
-        String fullDate = date;
-        fullDate.concat(" ");
-        fullDate.concat(time);
-        return sdf.parse(fullDate);
+        SimpleDateFormat dateTime = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+        SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
+        Date returnDate = new Date();
+        if (time.length()==0) {
+            returnDate = dateOnly.parse(date);
+        } else {
+            String fullDate = date;
+            fullDate = fullDate.concat(" ");
+            fullDate = fullDate.concat(time);
+            returnDate = dateTime.parse(fullDate);
+        }
+        return returnDate;
     }
 
     private void createNotifications(Context context) {
