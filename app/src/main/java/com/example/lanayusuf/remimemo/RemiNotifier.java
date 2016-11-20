@@ -99,6 +99,9 @@ public class RemiNotifier {
         priorityAlertOptions[0] = getPrioritySetting(settings, "high_pri_alert_pref");
         priorityAlertOptions[1] = getPrioritySetting(settings, "low_pri_alert_pref");
         priorityAlertOptions[2] = getPrioritySetting(settings, "no_pri_alert_pref");
+        for (int i = 0; i < priorityAlertOptions.length; i++) {
+            System.out.println("Priority "+i+" is: "+priorityAlertOptions[0]);
+        }
         for (int i = 0; i < eventNames.length; i++) {
             setAlert[i] = false;
             if (eventNames[i].length() > 0) {
@@ -123,7 +126,7 @@ public class RemiNotifier {
                             cal.setTime(event_date);
                             if (priorityAlertOptions[priority_type] == 24) {
                                 // set eventDateAlerts back one day
-                                cal.add(Calendar.DAY_OF_MONTH, -1);
+                                cal.add(Calendar.DATE, -1);
                                 setAlert[i] = true;
                             } else if (priorityAlertOptions[priority_type] == 1) {
                                 //set eventTimeAlerts back an hour, and eventDateAlerts back a day if necessary
@@ -166,7 +169,7 @@ public class RemiNotifier {
         SimpleDateFormat dateTime = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
         SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
         Date returnDate = new Date();
-        if (time.length()==0) {
+        if (time.length()==0 || time.contains("mm")) {
             returnDate = dateOnly.parse(date);
         } else {
             String fullDate = date;
@@ -188,8 +191,8 @@ public class RemiNotifier {
             if (setAlert[i]) {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(eventAlerts[i]);
-                alarmMgr.set(AlarmManager.RTC, cal.getTimeInMillis(), alarmIntent);
                 System.out.println("Event notification set to: " + cal.getTime().toString());
+                alarmMgr.set(AlarmManager.RTC, cal.getTimeInMillis(), alarmIntent);
             }
         }
     }
