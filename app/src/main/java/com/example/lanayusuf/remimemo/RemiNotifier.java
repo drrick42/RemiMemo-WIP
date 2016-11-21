@@ -99,9 +99,6 @@ public class RemiNotifier {
         priorityAlertOptions[0] = getPrioritySetting(settings, "high_pri_alert_pref");
         priorityAlertOptions[1] = getPrioritySetting(settings, "low_pri_alert_pref");
         priorityAlertOptions[2] = getPrioritySetting(settings, "no_pri_alert_pref");
-        for (int i = 0; i < priorityAlertOptions.length; i++) {
-            System.out.println("Priority "+i+" is: "+priorityAlertOptions[0]);
-        }
         for (int i = 0; i < eventNames.length; i++) {
             setAlert[i] = false;
             if (eventNames[i].length() > 0) {
@@ -150,7 +147,7 @@ public class RemiNotifier {
     }
 
     private int getPrioritySetting(SharedPreferences pref, String priority) {
-        String alertTime = pref.getString(priority, "1");
+        String alertTime = pref.getString(priority, null);
         int i = 0;
         if (alertTime.contains("1")) {
             i = 1;
@@ -158,10 +155,10 @@ public class RemiNotifier {
             i = 24;
         } else if (alertTime.contains("0")) {
             // i = 0
-        }
-        else {
+        } else {
             i = 2;
         }
+        System.out.println(priority + " set to " + i);
         return i;
     }
 
