@@ -64,9 +64,6 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
         Button btnMyLocation = (Button)findViewById(R.id.btnCurrentPos);
         btnMyLocation.setOnClickListener(this);
 
-
-
-
         // Create an instance of GoogleAPIClient.
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -122,12 +119,16 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        Log.i("Event Map", "Connection failed");
+        Toast toast = Toast.makeText(this, "Connection Failed", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
     }
 
     @Override
     public void onConnectionSuspended(int cause) {
-        Log.i("Event Map", "Connection Suspended");
+        Toast toast = Toast.makeText(this, "Connection Suspended", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
         mGoogleApiClient.connect();
     }
 
@@ -171,11 +172,10 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                         CameraPosition myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                     }else{
-                        Toast toast = Toast.makeText(this, "No location detected!", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
+                        Toast toast = Toast.makeText(this, "No location detected!", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                         toast.show();
                     }
-
                 }
                 break;
         }
@@ -190,69 +190,146 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
         {
             case 0:
                 latLong = getLocationFromAddress(this, eventLocations[0]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[0]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[0]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[0];
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
             case 1:
                 latLong = getLocationFromAddress(this, eventLocations[1]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[1]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[1]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[1];
+                    Toast toast = Toast.makeText(this,errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
             case 2:
                 latLong = getLocationFromAddress(this, eventLocations[2]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[2]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[2]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[2];
+                    Toast toast = Toast.makeText(this,errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
             case 3:
                 latLong = getLocationFromAddress(this, eventLocations[3]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[3]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[3]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[3];
+                    Toast toast = Toast.makeText(this,errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
             case 4:
                 latLong = getLocationFromAddress(this, eventLocations[4]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[4]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[4]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[4];
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
             case 5:
                 latLong = getLocationFromAddress(this, eventLocations[5]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[5]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[5]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[5];
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
             case 6:
                 latLong = getLocationFromAddress(this, eventLocations[6]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[6]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[6]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[6];
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
             case 7:
                 latLong = getLocationFromAddress(this, eventLocations[7]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[7]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[7]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[7];
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
             case 8:
                 latLong = getLocationFromAddress(this, eventLocations[8]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[8]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[8]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[8];
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
             case 9:
                 latLong = getLocationFromAddress(this, eventLocations[9]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[9]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[9]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[9];
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
             case 10:
                 latLong = getLocationFromAddress(this, eventLocations[10]);
-                mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[10]));
-                myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                if(latLong != null){
+                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[10]));
+                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
+                }else{
+                    String errorMessage = "Not a valid address for event - " + eventNames[10];
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.show();
+                }
                 break;
         }
     }
