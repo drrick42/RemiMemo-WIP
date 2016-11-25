@@ -3,6 +3,7 @@ package com.example.lanayusuf.remimemo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -74,6 +75,12 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     .addApi(LocationServices.API)
                     .build();
         }
+    }
+
+    //listening for screen orientation change
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     //code from http://stackoverflow.com/questions/3574644/how-can-i-find-the-latitude-and-longitude-from-address/27834110#27834110

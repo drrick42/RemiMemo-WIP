@@ -1,5 +1,6 @@
 package com.example.lanayusuf.remimemo;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +51,12 @@ public abstract class Priority extends AppCompatActivity implements View.OnClick
         if( EventDBHandler.isDatabaseExists(this) ){
             printEvents();
         }
+    }
+
+    //listening for screen orientation change
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override

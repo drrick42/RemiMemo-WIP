@@ -3,6 +3,7 @@ package com.example.lanayusuf.remimemo;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
@@ -318,6 +319,12 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         }else {
             startActivity(new Intent(this, NoPriority.class));
         }
+    }
+
+    //listening for screen orientation change
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
 }
