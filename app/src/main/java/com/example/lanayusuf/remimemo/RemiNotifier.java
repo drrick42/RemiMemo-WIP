@@ -94,6 +94,11 @@ public class RemiNotifier {
         }
     }
 
+    public String getEventName(int eventNo, Context context) {
+        getEvents(context);
+        return eventNames[eventNo];
+    }
+
     private void setAlertTimes(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         priorityAlertOptions[0] = getPrioritySetting(settings, "high_pri_alert_pref");
@@ -179,17 +184,18 @@ public class RemiNotifier {
 
     private void createNotifications(Context context) {
         Intent intent = new Intent(context, AlarmReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        // remove all previous alarms
-        alarmMgr.cancel(alarmIntent);
-        // then repopulate the alarms
-        for (int i = 0; i < eventAlerts.length; i++) {
+        for (int i = 0; i < LIMIT; i++) {
             if (setAlert[i]) {
                 Calendar cal = Calendar.getInstance();
-                cal.setTime(eventAlerts[i]);
-                System.out.println("Event notification set to: " + cal.getTime().toString());
-                alarmMgr.set(AlarmManager.RTC, cal.getTimeInMillis(), alarmIntent);
+                PendingIntent alarmIntent = PendingIntent.getBroadcast(context, i, intent, 0);
+                if (i < eventAlerts.length) {
+                    cal.setTime(eventAlerts[i]);
+                    System.out.println("Event notification set to: " + cal.getTime().toString());
+                    alarmMgr.set(AlarmManager.RTC, cal.getTimeInMillis(), alarmIntent);
+                } else {
+                    alarmMgr.cancel(alarmIntent);
+                }
             }
         }
     }
