@@ -51,12 +51,18 @@ public class RemiNotifier {
         createNotifications(context);
     }
 
+    public void populateNotifications(Context context) {
+        getEvents(context);
+        setAlertTimes(context);
+    }
+
     private void getEvents(Context context) {
         int counter = 0;
         for (int i = 0; i < LIMIT; i++) {
             eventNames[i] = "";
             eventPriorities[i] = "";
             eventTimes[i] = "";
+            eventDates[i] = "";
         }
 
         EventDBHandler.initializeDB(context);
@@ -94,11 +100,6 @@ public class RemiNotifier {
         }
     }
 
-    public String getEventName(int eventNo, Context context) {
-        getEvents(context);
-        return eventNames[eventNo];
-    }
-
     private void setAlertTimes(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         priorityAlertOptions[0] = getPrioritySetting(settings, "high_pri_alert_pref");
@@ -120,7 +121,8 @@ public class RemiNotifier {
                         priority_type = 2;
                         break;
                 }
-                if (!eventTimes[i].contains("mm")) {
+                if (!eventTimes[i].contains("mm") && !eventDates[i].contains("MM")
+                        && eventTimes[i].length() > 0 && eventDates[i].length() > 0) {
                     try {
                         if (eventDates[i].length() > 0 && eventTimes[i].length() > 0) {
                             Date event_date = getDate(eventDates[i], eventTimes[i]);
@@ -186,16 +188,14 @@ public class RemiNotifier {
         Intent intent = new Intent(context, AlarmReceiver.class);
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         for (int i = 0; i < LIMIT; i++) {
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(context, i, intent, 0);
             if (setAlert[i]) {
                 Calendar cal = Calendar.getInstance();
-                PendingIntent alarmIntent = PendingIntent.getBroadcast(context, i, intent, 0);
-                if (i < eventAlerts.length) {
-                    cal.setTime(eventAlerts[i]);
-                    System.out.println("Event notification set to: " + cal.getTime().toString());
-                    alarmMgr.set(AlarmManager.RTC, cal.getTimeInMillis(), alarmIntent);
-                } else {
-                    alarmMgr.cancel(alarmIntent);
-                }
+                cal.setTime(eventAlerts[i]);
+                System.out.println("Event notification set to: " + cal.getTime().toString());
+                alarmMgr.set(AlarmManager.RTC, cal.getTimeInMillis(), alarmIntent);
+            } else {
+                alarmMgr.cancel(alarmIntent);
             }
         }
     }
