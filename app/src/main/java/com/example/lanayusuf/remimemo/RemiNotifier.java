@@ -27,14 +27,13 @@ public class RemiNotifier {
         eventAlerts = new Date[init];
         priorityAlertOptions = new int[3];
         setAlert = new boolean[init];
-        intents = new PendingIntent[init];
     }
 
     public static RemiNotifier getInstance(){
         return new RemiNotifier(LIMIT);
     }
 
-    private static int LIMIT = 10;
+    private static int LIMIT = 50;
 
     public String[] eventNames;
     public String[] eventPriorities;
@@ -43,7 +42,6 @@ public class RemiNotifier {
     public Date[] eventAlerts;
     public int[] priorityAlertOptions;
     public boolean[] setAlert;
-    public PendingIntent[] intents;
 
     public void setNotifications(Context context) {
         getEvents(context);
@@ -63,6 +61,7 @@ public class RemiNotifier {
             eventPriorities[i] = "";
             eventTimes[i] = "";
             eventDates[i] = "";
+            setAlert[i] = false;
         }
 
         EventDBHandler.initializeDB(context);
@@ -106,7 +105,6 @@ public class RemiNotifier {
         priorityAlertOptions[1] = getPrioritySetting(settings, "low_pri_alert_pref");
         priorityAlertOptions[2] = getPrioritySetting(settings, "no_pri_alert_pref");
         for (int i = 0; i < eventNames.length; i++) {
-            setAlert[i] = false;
             if (eventNames[i].length() > 0) {
                 int priority_type = 0;
                 switch (eventPriorities[i])
