@@ -28,22 +28,22 @@
         <item>24</item>
     </string-array>
 
-    <string-array name="priority_sounds">
-        <item>Set Sound OFF</item>
-        <item>Set Sound ON</item>
+    <string-array name="priority_vibrate">
+        <item>Set Vibrate OFF</item>
+        <item>Set Vibrate ON</item>
     </string-array>
 
-    <string-array name="high_pri_sound">
+    <string-array name="vibrate_alert">
         <item>OFF</item>
         <item>ON</item>
     </string-array>
 
-    <string-array name="low_pri_sound">
-        <item>OFF</item>
-        <item>ON</item>
+    <string-array name="priority_sound">
+        <item>Set Vibrate OFF</item>
+        <item>Set Vibrate ON</item>
     </string-array>
 
-    <string-array name="no_pri_sound">
+    <string-array name="sound_alert">
         <item>OFF</item>
         <item>ON</item>
     </string-array>
