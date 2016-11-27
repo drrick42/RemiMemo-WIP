@@ -27,20 +27,22 @@
             android:summary="Choose when to alert no priority event"
             android:title="No Priority Alerts" />
     </PreferenceCategory>
-    <ListPreference
-        android:defaultValue="ON"
-        android:dialogTitle="My Vibration Options"
-        android:entries="@array/priority_vibrate"
-        android:entryValues="@array/vibrate_alert"
-        android:key="vibrate_pref"
-        android:summary="Vibrate on/off"
-        android:title="Vibration" />
-    <ListPreference
-        android:defaultValue="ON"
-        android:dialogTitle="My Sound Options"
-        android:entries="@array/priority_sound"
-        android:entryValues="@array/sound_alert"
-        android:key="sound_pref"
-        android:summary="Sound on/off"
-        android:title="Sound" />
+    <PreferenceCategory android:title="Priority Settings">
+        <ListPreference
+            android:defaultValue="ON"
+            android:dialogTitle="My Vibration Option"
+            android:entries="@array/priority_vibrate"
+            android:entryValues="@array/vibrate_alert"
+            android:key="vibrate_pref"
+            android:summary="Vibrate on/off"
+            android:title="Vibration" />
+        <ListPreference
+            android:defaultValue="ON"
+            android:dialogTitle="My Sound Option"
+            android:entries="@array/priority_sound"
+            android:entryValues="@array/sound_alert"
+            android:key="sound_pref"
+            android:summary="Sound on/off"
+            android:title="Sound" />
+    </PreferenceCategory>
 </PreferenceScreen>
