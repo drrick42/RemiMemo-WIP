@@ -132,6 +132,8 @@ public class RemiNotifier {
                             Date event_date = getDate(eventDates[i], eventTimes[i]);
                             Calendar cal = Calendar.getInstance();
                             cal.setTime(event_date);
+                            Date current_time = Calendar.getInstance().getTime();
+                            long diff = 0;
                             if (priorityAlertOptions[priority_type] == 24) {
                                 // set eventDateAlerts back one day
                                 cal.add(Calendar.DATE, -1);
