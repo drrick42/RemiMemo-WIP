@@ -34,7 +34,7 @@ public class RemiServices extends Service implements SharedPreferences.OnSharedP
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //RemiNotifier.getInstance().setNotifications(this);
+        RemiNotifier.getInstance().setNotifications(this);
     }
 
 }
