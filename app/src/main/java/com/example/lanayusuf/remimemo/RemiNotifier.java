@@ -158,7 +158,7 @@ public class RemiNotifier {
     }
 
     private int getPrioritySetting(SharedPreferences pref, String priority) {
-        String alertTime = pref.getString(priority, null);
+        String alertTime = pref.getString(priority, "1");
         int i = 0;
         if (alertTime.contains("1")) {
             i = 1;

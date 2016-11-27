@@ -57,8 +57,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         
         for (int i = 0; i < eventsNo; i++) {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            String vibrate = settings.getString("vibrate_pref", null);
-            String sound = settings.getString("sound_pref", null);
+            String vibrate = settings.getString("vibrate_pref", "ON");
+            String sound = settings.getString("sound_pref", "ON");
             if (vibrate.contains("ON")) {
                 builder.setVibrate(new long[] { 500, 100, 500, 100, 500 });
             }
