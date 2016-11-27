@@ -69,32 +69,38 @@ public class RemiNotifier {
             EventRemimemo event;
             List<EventRemimemo> eventRemimemoList = EventDBHandler.getInstance().queryEvents("High");
             for (int i = 0; i < eventRemimemoList.size(); i++) {
-                event = eventRemimemoList.get(i);
-                eventNames[counter] = event.getEventName();
-                eventPriorities[counter] = "High";
-                eventTimes[counter] = event.getEditTxtTime();
-                eventDates[counter] = event.getEditTxtDate();
-                counter++;
+                if (counter < LIMIT) {
+                    event = eventRemimemoList.get(i);
+                    eventNames[counter] = event.getEventName();
+                    eventPriorities[counter] = "High";
+                    eventTimes[counter] = event.getEditTxtTime();
+                    eventDates[counter] = event.getEditTxtDate();
+                    counter++;
+                }
             }
 
             eventRemimemoList = EventDBHandler.getInstance().queryEvents("Low");
             for (int i = 0; i < eventRemimemoList.size(); i++) {
-                event = eventRemimemoList.get(i);
-                eventNames[counter] = event.getEventName();
-                eventPriorities[counter] = "Low";
-                eventTimes[counter] = event.getEditTxtTime();
-                eventDates[counter] = event.getEditTxtDate();
-                counter++;
+                if (counter < LIMIT) {
+                    event = eventRemimemoList.get(i);
+                    eventNames[counter] = event.getEventName();
+                    eventPriorities[counter] = "Low";
+                    eventTimes[counter] = event.getEditTxtTime();
+                    eventDates[counter] = event.getEditTxtDate();
+                    counter++;
+                }
             }
 
             eventRemimemoList = EventDBHandler.getInstance().queryEvents("None");
             for (int i = 0; i < eventRemimemoList.size(); i++) {
-                event = eventRemimemoList.get(i);
-                eventNames[counter] = event.getEventName();
-                eventPriorities[counter] = "None";
-                eventTimes[counter] = event.getEditTxtTime();
-                eventDates[counter] = event.getEditTxtDate();
-                counter++;
+                if (counter < LIMIT) {
+                    event = eventRemimemoList.get(i);
+                    eventNames[counter] = event.getEventName();
+                    eventPriorities[counter] = "None";
+                    eventTimes[counter] = event.getEditTxtTime();
+                    eventDates[counter] = event.getEditTxtDate();
+                    counter++;
+                }
             }
         }
     }
