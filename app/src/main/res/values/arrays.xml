@@ -39,8 +39,8 @@
     </string-array>
 
     <string-array name="priority_sound">
-        <item>Set Vibrate OFF</item>
-        <item>Set Vibrate ON</item>
+        <item>Set Sound OFF</item>
+        <item>Set Sound ON</item>
     </string-array>
 
     <string-array name="sound_alert">
