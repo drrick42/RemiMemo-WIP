@@ -195,7 +195,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[0];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[0];
                     Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
@@ -208,7 +208,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[1];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[1];
                     Toast toast = Toast.makeText(this,errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
@@ -221,7 +221,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[2];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[2];
                     Toast toast = Toast.makeText(this,errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
@@ -234,7 +234,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[3];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[3];
                     Toast toast = Toast.makeText(this,errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
@@ -247,7 +247,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[4];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[4];
                     Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
@@ -260,7 +260,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[5];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[5];
                     Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
@@ -273,7 +273,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[6];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[6];
                     Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
@@ -286,7 +286,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[7];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[7];
                     Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
@@ -299,7 +299,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[8];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[8];
                     Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
@@ -312,7 +312,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[9];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[9];
                     Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
@@ -325,7 +325,7 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
                 }else{
-                    String errorMessage = "Not a valid address for event - " + eventNames[10];
+                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[10];
                     Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                     toast.show();
