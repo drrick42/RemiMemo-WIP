@@ -137,17 +137,20 @@ public class RemiNotifier {
                             if (priorityAlertOptions[priority_type] == 24) {
                                 // set eventDateAlerts back one day
                                 cal.add(Calendar.DATE, -1);
-                                setAlert[i] = true;
                             } else if (priorityAlertOptions[priority_type] == 1) {
                                 //set eventTimeAlerts back an hour, and eventDateAlerts back a day if necessary
                                 cal.add(Calendar.HOUR_OF_DAY, -1);
-                                setAlert[i] = true;
                             } else if (priorityAlertOptions[priority_type] == 2) {
                                 //set eventTimeAlerts back two hours, and eventDateAlerts back a day if necessary
                                 cal.add(Calendar.HOUR_OF_DAY, -2);
-                                setAlert[i] = true;
                             } else {
                                 //no alert
+                            }
+                            if (priorityAlertOptions[priority_type] != 0) {
+                                diff = cal.getTime().getTime() - current_time.getTime();
+                                if (diff > 0) {
+                                    setAlert[i] = true;
+                                }
                             }
                             eventAlerts[i] = cal.getTime();
                         }
