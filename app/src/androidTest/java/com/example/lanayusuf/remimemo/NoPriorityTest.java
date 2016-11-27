@@ -10,12 +10,12 @@ import android.app.Activity;
  * Created by LanaYusuf on 11/27/2016.
  */
 
-public class HighPriorityTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class NoPriorityTest extends ActivityInstrumentationTestCase2<MainActivity> {
     private MainActivity mainActivity;
     Instrumentation.ActivityMonitor activityMonitor;
     Button button;
 
-    public HighPriorityTest() {
+    public NoPriorityTest() {
         super(MainActivity.class);
     }
 
@@ -24,8 +24,8 @@ public class HighPriorityTest extends ActivityInstrumentationTestCase2<MainActiv
         super.setUp();
         setActivityInitialTouchMode(true);
         mainActivity = getActivity();
-        activityMonitor = getInstrumentation().addMonitor(HighPriority.class.getName(), null, false);
-        button = (Button) mainActivity.findViewById(R.id.btnHighPriority);
+        activityMonitor = getInstrumentation().addMonitor(NoPriority.class.getName(), null, false);
+        button = (Button) mainActivity.findViewById(R.id.btnNoPriority);
     }
 
     @SuppressLint("NewApi")
