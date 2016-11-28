@@ -60,10 +60,11 @@ public class AlarmReceiver extends BroadcastReceiver {
             String vibrate = settings.getString("vibrate_pref", "ON");
             String sound = settings.getString("sound_pref", "ON");
             if (vibrate.contains("ON")) {
-                builder.setVibrate(new long[] { 500, 100, 500, 100, 500 });
+                builder.setVibrate(new long[] { 500, 500, 100, 500, 100 });
             }
             if (sound.contains("ON")) {
-                builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+                Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                builder.setSound(uri);
             }
             Notification notification = new NotificationCompat.Builder(context)
                     .setContentTitle("RemiMemo")
