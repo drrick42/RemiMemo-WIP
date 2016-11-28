@@ -67,7 +67,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 builder.setSound(uri);
             }
-            Notification notification = new NotificationCompat.Builder(context)
+            Notification notification = builder
                     .setContentTitle("RemiMemo")
                     .setContentText(EventNames[event[i]] + " is coming up!")
                     .setSmallIcon(R.drawable.notification_icon)
