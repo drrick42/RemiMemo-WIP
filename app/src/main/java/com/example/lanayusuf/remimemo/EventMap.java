@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,12 +39,10 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
     //Map and list of events
 
     private GoogleMap mMap;
-    String[] eventNames = new String[10];
-    String[] eventLocations = new String[10];
+    String[] eventNames = new String[5];
+    String[] eventLocations = new String[5];
     int counter = 0;
-
     String[] realEventNames;
-
     protected GoogleApiClient mGoogleApiClient;
     protected Marker markerLocation;
 
@@ -145,7 +142,6 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
                 //Sensor Requirement
                 //On map, zoom in to user's current location, and add marker
 
-
                 //check phone's permission for location services
                 if ( Build.VERSION.SDK_INT >= 23 &&
                         ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
@@ -186,148 +182,69 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
         LatLng latLong;
         CameraPosition myPosition;
         //user clicks on event which moves the map to the location marker for that event
-        switch (position)
-        {
+        switch (position) {
             case 0:
                 latLong = getLocationFromAddress(this, eventLocations[0]);
-                if(latLong != null){
+                if (latLong != null) {
                     mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[0]));
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
+                } else {
                     String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[0];
                     Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
                 }
                 break;
             case 1:
                 latLong = getLocationFromAddress(this, eventLocations[1]);
-                if(latLong != null){
+                if (latLong != null) {
                     mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[1]));
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
+                } else {
                     String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[1];
-                    Toast toast = Toast.makeText(this,errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
                 }
                 break;
             case 2:
                 latLong = getLocationFromAddress(this, eventLocations[2]);
-                if(latLong != null){
+                if (latLong != null) {
                     mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[2]));
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
+                } else {
                     String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[2];
-                    Toast toast = Toast.makeText(this,errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
                 }
                 break;
             case 3:
                 latLong = getLocationFromAddress(this, eventLocations[3]);
-                if(latLong != null){
+                if (latLong != null) {
                     mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[3]));
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
+                } else {
                     String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[3];
-                    Toast toast = Toast.makeText(this,errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
                 }
                 break;
             case 4:
                 latLong = getLocationFromAddress(this, eventLocations[4]);
-                if(latLong != null){
+                if (latLong != null) {
                     mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[4]));
                     myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
+                } else {
                     String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[4];
                     Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
-                    toast.show();
-                }
-                break;
-            case 5:
-                latLong = getLocationFromAddress(this, eventLocations[5]);
-                if(latLong != null){
-                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[5]));
-                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
-                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[5];
-                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
-                    toast.show();
-                }
-                break;
-            case 6:
-                latLong = getLocationFromAddress(this, eventLocations[6]);
-                if(latLong != null){
-                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[6]));
-                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
-                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[6];
-                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
-                    toast.show();
-                }
-                break;
-            case 7:
-                latLong = getLocationFromAddress(this, eventLocations[7]);
-                if(latLong != null){
-                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[7]));
-                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
-                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[7];
-                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
-                    toast.show();
-                }
-                break;
-            case 8:
-                latLong = getLocationFromAddress(this, eventLocations[8]);
-                if(latLong != null){
-                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[8]));
-                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
-                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[8];
-                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
-                    toast.show();
-                }
-                break;
-            case 9:
-                latLong = getLocationFromAddress(this, eventLocations[9]);
-                if(latLong != null){
-                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[9]));
-                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
-                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[9];
-                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
-                    toast.show();
-                }
-                break;
-            case 10:
-                latLong = getLocationFromAddress(this, eventLocations[10]);
-                if(latLong != null){
-                    mMap.addMarker(new MarkerOptions().position(latLong).title(eventNames[10]));
-                    myPosition = new CameraPosition.Builder().target(latLong).zoom(17).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(myPosition));
-                }else{
-                    String errorMessage = "Error! Check for cellular connection and valid location address - " + eventNames[10];
-                    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
                 }
                 break;
@@ -348,48 +265,23 @@ public class EventMap extends FragmentActivity implements OnMapReadyCallback, Ad
         mMap = googleMap;
 
         if (EventDBHandler.getInstance().isDatabaseExists(this)) {
+            String[] priorityNames = {"High", "Low", "None"};
 
-            //fill map list with event names that have an associated location
-            //add marker on map for each event
-            EventRemimemo event;
-            List<EventRemimemo> eventRemimemoList = EventDBHandler.getInstance().queryEvents("High");
-            for (int i = 0; i < eventRemimemoList.size(); i++) {
-                event = eventRemimemoList.get(i);
-                if (event.getEventLocation().length() != 0) {
-                    eventNames[counter] = event.getEventName();
-                    eventLocations[counter] = event.getEventLocation();
-                    counter++;
-                    LatLng latLong = getLocationFromAddress(this, event.getEventLocation());
-                    if (latLong != null) {
-                        mMap.addMarker(new MarkerOptions().position(latLong).title(event.getEventName()));
-                    }
-                }
-            }
-
-            eventRemimemoList = EventDBHandler.getInstance().queryEvents("Low");
-            for (int i = 0; i < eventRemimemoList.size(); i++) {
-                event = eventRemimemoList.get(i);
-                if (event.getEventLocation().length() != 0) {
-                    eventNames[counter] = event.getEventName();
-                    eventLocations[counter] = event.getEventLocation();
-                    counter++;
-                    LatLng latLong = getLocationFromAddress(this, event.getEventLocation());
-                    if (latLong != null) {
-                        mMap.addMarker(new MarkerOptions().position(latLong).title(event.getEventName()));
-                    }
-                }
-            }
-
-            eventRemimemoList = EventDBHandler.getInstance().queryEvents("None");
-            for (int i = 0; i < eventRemimemoList.size(); i++) {
-                event = eventRemimemoList.get(i);
-                if (event.getEventLocation().length() != 0) {
-                    eventNames[counter] = event.getEventName();
-                    eventLocations[counter] = event.getEventLocation();
-                    counter++;
-                    LatLng latLong = getLocationFromAddress(this, event.getEventLocation());
-                    if (latLong != null) {
-                        mMap.addMarker(new MarkerOptions().position(latLong).title(event.getEventName()));
+            for(int p = 0; p < priorityNames.length; p++){
+                //fill map list with event names that have an associated location
+                //add marker on map for each event
+                EventRemimemo event;
+                List<EventRemimemo> eventRemimemoList = EventDBHandler.getInstance().queryEvents(priorityNames[p]);
+                for (int i = 0; i < eventRemimemoList.size(); i++) {
+                    event = eventRemimemoList.get(i);
+                    if (event.getEventLocation().length() != 0) {
+                        eventNames[counter] = event.getEventName();
+                        eventLocations[counter] = event.getEventLocation();
+                        counter++;
+                        LatLng latLong = getLocationFromAddress(this, event.getEventLocation());
+                        if (latLong != null) {
+                            mMap.addMarker(new MarkerOptions().position(latLong).title(event.getEventName()));
+                        }
                     }
                 }
             }
