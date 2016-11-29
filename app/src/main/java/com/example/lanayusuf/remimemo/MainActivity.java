@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         //If database not initialized, initialize it.
-        EventDBHandler.getInstance().initializeDB(this);
+        EventDBHandler.initializeDB(this);
 
         View btnHighPriority = findViewById(R.id.btnHighPriority);
         btnHighPriority.setOnClickListener(this);

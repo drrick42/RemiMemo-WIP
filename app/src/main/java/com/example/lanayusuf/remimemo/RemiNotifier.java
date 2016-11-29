@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,6 +43,10 @@ public class RemiNotifier {
     public Date[] eventAlerts;
     public int[] priorityAlertOptions;
     public boolean[] setAlert;
+    public static final int highRemind = 1;
+    public static final int lowRemind = 2;
+    public static final int noRemind = 24;
+    public static final long defaultTime = 0L;
 
     public void setNotifications(Context context) {
         getEvents(context);
@@ -134,13 +139,13 @@ public class RemiNotifier {
                             cal.setTime(event_date);
                             Date current_time = Calendar.getInstance().getTime();
                             long diff = 0;
-                            if (priorityAlertOptions[priority_type] == 24) {
+                            if (priorityAlertOptions[priority_type] == noRemind) {
                                 // set eventDateAlerts back one day
                                 cal.add(Calendar.DATE, -1);
-                            } else if (priorityAlertOptions[priority_type] == 1) {
+                            } else if (priorityAlertOptions[priority_type] == highRemind) {
                                 //set eventTimeAlerts back an hour, and eventDateAlerts back a day if necessary
                                 cal.add(Calendar.HOUR_OF_DAY, -1);
-                            } else if (priorityAlertOptions[priority_type] == 2) {
+                            } else if (priorityAlertOptions[priority_type] == lowRemind) {
                                 //set eventTimeAlerts back two hours, and eventDateAlerts back a day if necessary
                                 cal.add(Calendar.HOUR_OF_DAY, -2);
                             } else {
@@ -165,14 +170,14 @@ public class RemiNotifier {
     private int getPrioritySetting(SharedPreferences pref, String priority) {
         String alertTime = pref.getString(priority, "1");
         int i = 0;
-        if (alertTime.contains("1")) {
-            i = 1;
-        } else if (alertTime.contains("24")) {
-            i = 24;
+        if (alertTime.contains(Integer.toString(highRemind))) {
+            i = highRemind;
+        } else if (alertTime.contains(Integer.toString(noRemind))) {
+            i = noRemind;
         } else if (alertTime.contains("0")) {
             // i = 0
         } else {
-            i = 2;
+            i = lowRemind;
         }
         System.out.println(priority + " set to " + i);
         return i;
@@ -207,6 +212,23 @@ public class RemiNotifier {
                 alarmMgr.cancel(alarmIntent);
             }
         }
+    }
+
+    //Made this here because didn't want getDate to be public
+    public Date acquireDate(String someDate, String someTime){
+
+        Date thisDate = Calendar.getInstance().getTime();
+        thisDate.setTime(defaultTime);
+
+        try {
+            thisDate = getDate(someDate,someTime);
+
+        }catch (ParseException e){
+            Log.e("***ACQUIRE DATE***","Parse exception here: ");
+            e.printStackTrace();
+        }
+
+        return thisDate;
     }
 
 

@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
 import java.util.Calendar;
@@ -31,9 +30,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         long minDiff = 0;
         int[] event = new int[EventTimes.length]; // the events to notify
         int eventsNo = 0; // number of events to notify
+
         for (int i = 0; i < EventTimes.length; i++) {
             if (setAlerts[i]) {
                 long diff = time.getTime() - EventTimes[i].getTime();
+
                 if (diff < 0) {
                     diff = diff * -1;
                 }

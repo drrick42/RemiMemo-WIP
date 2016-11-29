@@ -49,6 +49,7 @@ public abstract class Priority extends AppCompatActivity implements View.OnClick
 
         mLayout = (LinearLayout) findViewById(R.id.layout_Events);
         if( EventDBHandler.isDatabaseExists(this) ){
+            PeriodicRepeat.getInstance();
             printEvents();
         }
     }
@@ -62,6 +63,7 @@ public abstract class Priority extends AppCompatActivity implements View.OnClick
     @Override
     public abstract void onClick(View v);
 
+    //Display the events onto screen.
     private void printEvents(){
         eventRemimemoList = EventDBHandler.getInstance().queryEvents(getPriority());
         allButton = new ArrayList<>(eventRemimemoList.size());
@@ -95,4 +97,6 @@ public abstract class Priority extends AppCompatActivity implements View.OnClick
         }
 
     }
+
+
 }
