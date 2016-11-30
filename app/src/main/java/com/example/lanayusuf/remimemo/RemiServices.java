@@ -14,7 +14,7 @@ public class RemiServices extends Service implements SharedPreferences.OnSharedP
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // START YOUR TASKS
-        //RemiNotifier.getInstance().setNotifications(this);
+        RemiNotifier.getInstance().setNotifications(this);
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 
         return super.onStartCommand(intent, flags, startId);

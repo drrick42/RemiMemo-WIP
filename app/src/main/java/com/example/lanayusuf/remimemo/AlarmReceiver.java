@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
@@ -21,6 +22,7 @@ import java.util.Date;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        /**
         RemiNotifier notifier = RemiNotifier.getInstance();
         notifier.populateNotifications(context);
         String[] EventNames = notifier.eventNames;
@@ -52,15 +54,21 @@ public class AlarmReceiver extends BroadcastReceiver {
                 }
             }
         }
+         */
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        
+        /**
         for (int i = 0; i < eventsNo; i++) {
+         */
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
             String vibrate = settings.getString("vibrate_pref", "ON");
             String sound = settings.getString("sound_pref", "ON");
+            String name = intent.getStringExtra(RemiNotifier.event_name);
+            String priority = intent.getStringExtra(RemiNotifier.event_pri);
+            if (name == null) name = "An event";
+            if (priority == null) priority = "None";
             if (vibrate.contains("ON")) {
                 builder.setVibrate(new long[] { 500, 500, 100, 500, 100 });
             }
@@ -68,14 +76,22 @@ public class AlarmReceiver extends BroadcastReceiver {
                 Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 builder.setSound(uri);
             }
+
+            Intent priority_page;
+            if (priority.contains("High")) priority_page = new Intent(context, HighPriority.class);
+            else if (priority.contains("Low")) priority_page = new Intent(context, LowPriority.class);
+            else priority_page = new Intent(context, NoPriority.class);
+
             Notification notification = builder
                     .setContentTitle("RemiMemo")
-                    .setContentText(EventNames[event[i]] + " is coming up!")
+                    .setContentText(name + " is coming up!")
                     .setSmallIcon(R.drawable.notification_icon)
-                    .setContentIntent(PendingIntent.getActivity(context, 0, new Intent(context, EditEvent.class), 0))
+                    .setContentIntent(PendingIntent.getActivity(context, 0, priority_page, 0))
                     .build();
 
             notificationManager.notify(0, notification);
+        /**
         }
+         */
     }
 }

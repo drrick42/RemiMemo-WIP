@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Derrick on 11/12/2016.
@@ -43,21 +44,21 @@ public class RemiNotifier {
     public Date[] eventAlerts;
     public int[] priorityAlertOptions;
     public boolean[] setAlert;
-    public static final int highRemind = 1;
-    public static final int lowRemind = 2;
-    public static final int noRemind = 24;
     public static final long defaultTime = 0L;
+    public static String event_name = "EVENT_NAME";
+    public static String event_pri = "EVENT_PRI";
 
     public void setNotifications(Context context) {
         getEvents(context);
         setAlertTimes(context);
         createNotifications(context);
     }
-
+    /**
     public void populateNotifications(Context context) {
         getEvents(context);
         setAlertTimes(context);
     }
+     */
 
     private void getEvents(Context context) {
         int counter = 0;
@@ -70,7 +71,7 @@ public class RemiNotifier {
         }
 
         EventDBHandler.initializeDB(context);
-        if (EventDBHandler.getInstance().isDatabaseExists(context)) {
+        if (EventDBHandler.isDatabaseExists(context)) {
             EventRemimemo event;
             List<EventRemimemo> eventRemimemoList = EventDBHandler.getInstance().queryEvents("High");
             for (int i = 0; i < eventRemimemoList.size(); i++) {
@@ -112,9 +113,9 @@ public class RemiNotifier {
 
     private void setAlertTimes(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        priorityAlertOptions[0] = getPrioritySetting(settings, "high_pri_alert_pref");
-        priorityAlertOptions[1] = getPrioritySetting(settings, "low_pri_alert_pref");
-        priorityAlertOptions[2] = getPrioritySetting(settings, "no_pri_alert_pref");
+        priorityAlertOptions[0] = Integer.parseInt(settings.getString("high_pri_alert_pref", "1"));
+        priorityAlertOptions[1] = Integer.parseInt(settings.getString("low_pri_alert_pref", "1"));
+        priorityAlertOptions[2] = Integer.parseInt(settings.getString("no_pri_alert_pref", "1"));
         for (int i = 0; i < eventNames.length; i++) {
             if (eventNames[i].length() > 0) {
                 int priority_type = 0;
@@ -134,25 +135,17 @@ public class RemiNotifier {
                         && eventTimes[i].length() > 0 && eventDates[i].length() > 0) {
                     try {
                         if (eventDates[i].length() > 0 && eventTimes[i].length() > 0) {
+
                             Date event_date = getDate(eventDates[i], eventTimes[i]);
+
                             Calendar cal = Calendar.getInstance();
                             cal.setTime(event_date);
+                            int time_change = priorityAlertOptions[priority_type] * -1;
+                            cal.add(Calendar.HOUR_OF_DAY, time_change);
+
                             Date current_time = Calendar.getInstance().getTime();
-                            long diff = 0;
-                            if (priorityAlertOptions[priority_type] == noRemind) {
-                                // set eventDateAlerts back one day
-                                cal.add(Calendar.DATE, -1);
-                            } else if (priorityAlertOptions[priority_type] == highRemind) {
-                                //set eventTimeAlerts back an hour, and eventDateAlerts back a day if necessary
-                                cal.add(Calendar.HOUR_OF_DAY, -1);
-                            } else if (priorityAlertOptions[priority_type] == lowRemind) {
-                                //set eventTimeAlerts back two hours, and eventDateAlerts back a day if necessary
-                                cal.add(Calendar.HOUR_OF_DAY, -2);
-                            } else {
-                                //no alert
-                            }
                             if (priorityAlertOptions[priority_type] != 0) {
-                                diff = cal.getTime().getTime() - current_time.getTime();
+                                long diff = cal.getTime().getTime() - current_time.getTime();
                                 if (diff > 0) {
                                     setAlert[i] = true;
                                 }
@@ -167,29 +160,12 @@ public class RemiNotifier {
         }
     }
 
-    private int getPrioritySetting(SharedPreferences pref, String priority) {
-        String alertTime = pref.getString(priority, "1");
-        int i = 0;
-        if (alertTime.contains(Integer.toString(highRemind))) {
-            i = highRemind;
-        } else if (alertTime.contains(Integer.toString(noRemind))) {
-            i = noRemind;
-        } else if (alertTime.contains("0")) {
-            // i = 0
-        } else {
-            i = lowRemind;
-        }
-        System.out.println(priority + " set to " + i);
-        return i;
-    }
-
     private Date getDate(String date, String time) throws ParseException {
-        SimpleDateFormat dateTime = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
-        SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
-        Date returnDate = new Date();
-        if (time.length()==0 || time.contains("mm")) {
-            returnDate = dateOnly.parse(date);
-        } else {
+        SimpleDateFormat dateTime = new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US);
+        SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        Date returnDate;
+        if (time.length()==0 || time.contains("mm")) returnDate = dateOnly.parse(date);
+        else {
             String fullDate = date;
             fullDate = fullDate.concat(" ");
             fullDate = fullDate.concat(time);
@@ -199,9 +175,11 @@ public class RemiNotifier {
     }
 
     private void createNotifications(Context context) {
-        Intent intent = new Intent(context, AlarmReceiver.class);
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         for (int i = 0; i < LIMIT; i++) {
+            Intent intent = new Intent(context, AlarmReceiver.class);
+            intent.putExtra(event_name, eventNames[i]);
+            intent.putExtra(event_pri, eventPriorities[i]);
             PendingIntent alarmIntent = PendingIntent.getBroadcast(context, i, intent, 0);
             if (setAlert[i]) {
                 Calendar cal = Calendar.getInstance();

@@ -273,8 +273,6 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
                         EventDBHandler.getInstance().updateEvent(event);
                     }
 
-                    RemiNotifier.getInstance().setNotifications(this);
-
                     finish();
                     chooseActivityToStart();
                 }else {
@@ -368,6 +366,9 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
     }
 
     private void chooseActivityToStart(){
+
+        RemiNotifier.getInstance().setNotifications(this);
+
         Intent intent = getIntent();
 
         if(intent.getStringExtra("SUPER_CLASS_PRIORITY").contentEquals(mPriority[1])){
