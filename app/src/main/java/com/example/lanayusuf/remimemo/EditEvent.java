@@ -3,6 +3,7 @@ package com.example.lanayusuf.remimemo;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
@@ -25,8 +26,10 @@ import java.util.TimeZone;
  */
 public class EditEvent extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
+    //Error checking
+    private enum ERRORS{PRIORITY, DATE, TIME, TITLE}
+    private boolean error[];
     //EditEvent class for creating a new event
-    private boolean error = true;
     private int day;
     private int month;
     private int year;
@@ -43,8 +46,14 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
     private EditText editEventLocation;
     private EditText editTxtDate;
     private EditText editTxtTime;
+
     private String[] mPriority = {"Select", "High", "Low", "None"};
     private EventRemimemo event;
+
+    private String defaultDate;
+    private String defaultTime;
+    private String defaultTitle;
+
 
     public void setEventPage(){
 
@@ -98,6 +107,7 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         Button btnDelete = (Button)findViewById(R.id.btn_delete);
         btnDelete.setOnClickListener(this);
 
+        error = new boolean[]{true,true,true,true};
         event = new EventRemimemo();
 
         //******SET UP PAGE VALUES******//
@@ -107,6 +117,7 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         EditText editTxtEventDescription = (EditText) findViewById(R.id.editTxt_description);
         //User is able to add address location of event
         EditText editTxtEventLocation = (EditText) findViewById(R.id.editTxt_location);
+        defaultTitle = editTxtEventName.getText().toString();
 
         //User selects mPriority of event
         editEventPriority = (Spinner)findViewById(R.id.spinner_priority);
@@ -119,6 +130,8 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         editTxtDate = (EditText) findViewById(R.id.editTxt_date);
         //User clicks on text and time pops up
         editTxtTime = (EditText) findViewById(R.id.editTxt_time);
+        defaultDate = editTxtDate.getText().toString();
+        defaultTime = editTxtTime.getText().toString();
 
         //******SET EVENT VALUES******//
         //listener to get event name
@@ -228,24 +241,45 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         {
             case R.id.btn_done:
                 //bring to previous Priority page with event updated
-                if(!error) {
 
-                    event.setEventName(editEventName.getText().toString());
-                    event.setEventDescription(editEventDescription.getText().toString());
-                    event.setEventLocation(editEventLocation.getText().toString());
-                    event.setEditTxtDate(editTxtDate.getText().toString());
-                    event.setEditTxtTime(editTxtTime.getText().toString());
+                event.setEventName(editEventName.getText().toString());
+                event.setEventDescription(editEventDescription.getText().toString());
+                event.setEventLocation(editEventLocation.getText().toString());
+                event.setEditTxtDate(editTxtDate.getText().toString());
+                event.setEditTxtTime(editTxtTime.getText().toString());
 
-                    if(event.getEventId() == -1L) {
+                //if the event date is NOT the default
+                if (!event.getEditTxtDate().contentEquals(defaultDate)){
+                    error[ERRORS.DATE.ordinal()] = false;
+                }
+
+                //if the event time is NOT the default
+                if (!event.getEditTxtTime().contentEquals(defaultTime)){
+                    error[ERRORS.TIME.ordinal()] = false;
+                }
+
+                //if the event title is NOT the default
+                if (!event.getEventName().contentEquals(defaultTitle)){
+                    error[ERRORS.TITLE.ordinal()] = false;
+                }
+
+                //if priority,date, time, and title have been set correctly
+                if(!error[ERRORS.PRIORITY.ordinal()] && !error[ERRORS.DATE.ordinal()] &&
+                        !error[ERRORS.TIME.ordinal()] && !error[ERRORS.TITLE.ordinal()] ) {
+
+                    if (event.getEventId() == -1L) {
                         EventDBHandler.getInstance().addEvent(event);
-                    }else{
+                    } else {
                         EventDBHandler.getInstance().updateEvent(event);
                     }
 
                     finish();
                     chooseActivityToStart();
-
-                }else{
+                }else {
+                    if(error[ERRORS.TITLE.ordinal()]){
+                        //If the title is the default title or title is empty, reset title
+                        event.setEventName(defaultTitle);
+                    }
                     displayError();
                 }
 
@@ -283,7 +317,7 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
                 timePickerdialog.show();
                 break;
         }
-        RemiNotifier.getInstance().setNotifications(this);
+
     }
 
 
@@ -291,9 +325,9 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
         if(position == 0){
-            error = true;
+            error[ERRORS.PRIORITY.ordinal()] = true;
         }else{
-            error = false;
+            error[ERRORS.PRIORITY.ordinal()] = false;
             event.setEventPriority(parent.getItemAtPosition(position).toString());
         }
     }
@@ -303,12 +337,38 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
     }
 
     public void displayError(){
-        Toast toast = Toast.makeText(this, "ERROR! Priority needs to be chosen!", Toast.LENGTH_SHORT);
+
+        String priorityError = "";
+        String dateError = "";
+        String timeError = "";
+        String nameError = "";
+
+        if(error[ERRORS.PRIORITY.ordinal()]){
+            priorityError = "Priority, ";
+        }
+
+        if(error[ERRORS.DATE.ordinal()]){
+            dateError = "Date, ";
+        }
+
+        if(error[ERRORS.TIME.ordinal()]){
+            timeError = "Time, ";
+        }
+
+        if(error[ERRORS.TITLE.ordinal()]){
+            nameError = "Title, ";
+        }
+
+        Toast toast = Toast.makeText(this, "ERROR! "+ priorityError +
+                dateError + timeError + nameError +" needs to be chosen!", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
     }
 
     private void chooseActivityToStart(){
+
+        RemiNotifier.getInstance().setNotifications(this);
+
         Intent intent = getIntent();
 
         if(intent.getStringExtra("SUPER_CLASS_PRIORITY").contentEquals(mPriority[1])){
@@ -318,6 +378,12 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         }else {
             startActivity(new Intent(this, NoPriority.class));
         }
+    }
+
+    //listening for screen orientation change
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
 }

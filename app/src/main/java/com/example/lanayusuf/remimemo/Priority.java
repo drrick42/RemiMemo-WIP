@@ -1,5 +1,6 @@
 package com.example.lanayusuf.remimemo;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -48,13 +49,21 @@ public abstract class Priority extends AppCompatActivity implements View.OnClick
 
         mLayout = (LinearLayout) findViewById(R.id.layout_Events);
         if( EventDBHandler.isDatabaseExists(this) ){
+            PeriodicRepeat.getInstance();
             printEvents();
         }
+    }
+
+    //listening for screen orientation change
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override
     public abstract void onClick(View v);
 
+    //Display the events onto screen.
     private void printEvents(){
         eventRemimemoList = EventDBHandler.getInstance().queryEvents(getPriority());
         allButton = new ArrayList<>(eventRemimemoList.size());
@@ -88,4 +97,6 @@ public abstract class Priority extends AppCompatActivity implements View.OnClick
         }
 
     }
+
+
 }

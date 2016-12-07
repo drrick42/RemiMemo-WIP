@@ -3,6 +3,7 @@ package com.example.lanayusuf.remimemo;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         //If database not initialized, initialize it.
-        EventDBHandler.getInstance().initializeDB(this);
+        EventDBHandler.initializeDB(this);
 
         View btnHighPriority = findViewById(R.id.btnHighPriority);
         btnHighPriority.setOnClickListener(this);
@@ -34,10 +35,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View btnSettings = findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(this);
 
+
         if (!isMyServiceRunning()){
                 Intent serviceIntent = new Intent(this, RemiServices.class);
                 this.startService(serviceIntent);
         }
+
     }
 
     @Override
@@ -61,6 +64,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+
+    //listening for screen orientation change
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
 
     private boolean isMyServiceRunning() {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
